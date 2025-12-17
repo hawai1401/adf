@@ -70,7 +70,7 @@ export default function Home() {
       <div className="w-full h-[calc(100vh-65px)] absolute">
         <FloatingLines interactive={false} />
       </div>
-      <section className="flex flex-col justify-center items-center gap-8 p-8 w-full h-[calc(100vh-65px)]">
+      <section className="backdrop-blur-sm flex flex-col justify-center items-center gap-8 p-8 w-full h-[calc(100vh-65px)]">
         <div className="flex flex-col justify-center items-center gap-2">
           <Image
             src="/logo.webp"
