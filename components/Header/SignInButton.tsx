@@ -1,3 +1,5 @@
+"use client"
+
 import useDiscordAuth from "@/hooks/useDiscordAuth";
 import {
   RippleButton,

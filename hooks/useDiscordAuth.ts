@@ -1,7 +1,9 @@
 import authClient from "@/lib/auth-client";
+import getMember from "@/lib/utilisateurs/getMember";
 import { User } from "better-auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function useDiscordAuth() {
   const [user, setUser] = useState<User | null | undefined>(undefined);
@@ -11,21 +13,38 @@ export default function useDiscordAuth() {
   const signIn = async () => {
     await authClient.signIn.social({
       provider: "discord",
-      callbackURL: "http://localhost:3000/dashboard",
     });
-  };
-
-  const getUser = async () => {
-    setIsFetch(true);
-    const session = await authClient.getSession();
-    setUser(session.data?.user ?? null);
-    setIsFetch(false);
   };
 
   const signOut = async () => {
     await authClient.signOut();
     router.push("/");
     setUser(null);
+  };
+
+  const getUser = async () => {
+    setIsFetch(true);
+    const session = await authClient.getSession();
+    if (session.data?.user) {
+      const member = await getMember(session.data.user.name);
+      if (!member) {
+        await authClient.signOut();
+        toast.error("Vous n'êtes pas dans la liste des membres de l'ADF !");
+        return;
+      } else {
+        if (!member.roles.includes("1451587139404828692")) {
+          await authClient.signOut();
+          toast.error(
+            "Vous n'êtes pas dans la liste des fondateurs de l'ADF !"
+          );
+          return;
+        }
+      }
+      setUser(session.data.user);
+    } else {
+      setUser(null);
+    }
+    setIsFetch(false);
   };
 
   return { signIn, signOut, getUser, user, isFetch };
