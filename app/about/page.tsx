@@ -1,4 +1,4 @@
-import Orb from "@/components/Orb";
+import Orb from "@/components/background/Orb";
 
 export default function About() {
   return (
