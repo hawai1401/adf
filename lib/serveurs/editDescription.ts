@@ -21,6 +21,7 @@ export default async function editDescription(
         ? `https://cdn.discordapp.com/icons/${serveur.id}/${serveur.icon}.webp`
         : null,
       badges,
+      member_count: serveur.approximate_member_count
     },
   });
 }

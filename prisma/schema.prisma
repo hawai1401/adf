@@ -22,6 +22,7 @@ model serveur {
   updatedAt           DateTime @updatedAt
   owner               User     @relation(references: [id], fields: [userId])
   userId              String
+  member_count        Int
 }
 
 enum badges {

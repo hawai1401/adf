@@ -31,6 +31,7 @@ export default async function addServeur(
           id: session!.user.id,
         },
       },
+      member_count: serveur.approximate_member_count
     },
   });
 

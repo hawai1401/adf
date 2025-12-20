@@ -8,8 +8,26 @@ import ScrollFloat from "@/components/animations/ScrollFloat";
 import FloatingLines from "@/components/background/FloatingLines";
 import Counters from "@/components/home/Counters";
 import Cards from "@/components/home/Cards";
+import prisma from "@/lib/prisma";
+import { serveur } from "@/lib/serveurs/userServers";
 
-export default function Home() {
+export default async function Home() {
+  const serveurs = await prisma.serveur.count({
+    where: {
+      approuved: true,
+    },
+  });
+
+  const guild: serveur = await fetch(
+    `https://discord.com/api/v10/guilds/1413830273044320391?with_counts=true`,
+    {
+      headers: {
+        Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    }
+  ).then((res) => res.json());
+
   return (
     <>
       <div className="w-full h-[calc(100vh-65px)] absolute">
@@ -52,7 +70,11 @@ export default function Home() {
         >
           Statistiques
         </ScrollFloat>
-        <Counters />
+        <Counters
+          serveurs={serveurs}
+          membres={guild.approximate_member_count}
+          blacklists={25}
+        />
       </section>
       <section
         id="cards"

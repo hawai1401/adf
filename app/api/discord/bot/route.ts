@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyKey } from "discord-interactions";
-import {
-  APIInteraction,
-  InteractionType,
-  MessageFlags,
-} from "discord-api-types/v10";
-import prisma from "@/lib/prisma";
+import { APIInteraction, InteractionType } from "discord-api-types/v10";
 
 export async function POST(req: NextRequest) {
   const signature = req.headers.get("x-signature-ed25519");
@@ -36,75 +31,6 @@ export async function POST(req: NextRequest) {
       type: 4,
       data: { content: "Pong 🏓" },
     });
-  }
-
-  // Serveur accepter/refuser
-  if (interaction.type === InteractionType.MessageComponent) {
-    const action = interaction.data.custom_id.split("_")[0]!;
-    if (action !== "allowed" && action !== "denied")
-      return new NextResponse("Unhandled", { status: 400 });
-    const guildId = interaction.data.custom_id.split("_")[1]!;
-    if (action === "allowed") {
-      const serveur = (await prisma.serveur.findUnique({
-        where: {
-          id: guildId,
-        },
-      }))!;
-      await prisma.serveur.update({
-        where: {
-          id: guildId,
-        },
-        data: {
-          approuved: true,
-          description_pending: "",
-          description: serveur.description_pending,
-        },
-      });
-      setTimeout(() => {
-        fetch(
-          `https://discord.com/api/v10/channels/${interaction.channel.id}/messages/${interaction.message.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-      }, 1000);
-      return NextResponse.json({
-        type: 4,
-        data: {
-          content: "✅ - Serveur accepter",
-          flags: MessageFlags.Ephemeral,
-        },
-      });
-    } else {
-      await prisma.serveur.delete({
-        where: {
-          id: guildId,
-        },
-      });
-      setTimeout(() => {
-        fetch(
-          `https://discord.com/api/v10/channels/${interaction.channel.id}/messages/${interaction.message.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-      }, 1000);
-      return NextResponse.json({
-        type: 4,
-        data: {
-          content: "❌ - Serveur refuser",
-          flags: MessageFlags.Ephemeral,
-        },
-      });
-    }
   }
 
   return new NextResponse("Unhandled", { status: 400 });

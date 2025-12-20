@@ -3,7 +3,15 @@
 import { useRef, useState, useEffect } from "react";
 import Counter from "../animations/Counter";
 
-export default function Counters() {
+export default function Counters({
+  serveurs,
+  membres,
+  blacklists,
+}: {
+  serveurs: number;
+  membres: number;
+  blacklists: number;
+}) {
   const counterRef = useRef<HTMLDivElement>(null);
   const [play, setPlay] = useState([false, false, false]);
 
@@ -37,7 +45,7 @@ export default function Counters() {
       >
         <h3 className="text-xl text-center">Serveurs</h3>
         <Counter
-          value={play[0] ? 130 : 0}
+          value={play[0] ? serveurs : 0}
           places={[100, 10, 1]}
           fontSize={60}
           padding={5}
@@ -53,7 +61,7 @@ export default function Counters() {
       >
         <h3 className="text-xl text-center">Membres</h3>
         <Counter
-          value={play[1] ? 125 : 0}
+          value={play[1] ? membres : 0}
           places={[100, 10, 1]}
           fontSize={60}
           padding={5}
@@ -69,7 +77,7 @@ export default function Counters() {
       >
         <h3 className="text-xl text-center">Blacklists</h3>
         <Counter
-          value={play[2] ? 30 : 0}
+          value={play[2] ? blacklists : 0}
           places={[100, 10, 1]}
           fontSize={60}
           padding={5}
