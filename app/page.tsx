@@ -1,70 +1,15 @@
-"use client";
-
 import Image from "next/image";
 import {
   RippleButton,
   RippleButtonRipples,
 } from "@/components/animate-ui/components/buttons/ripple";
 import Link from "next/link";
-import Counter from "@/components/animations/Counter";
-import ScrollFloat from "@/components/ScrollFloat";
-import { useEffect, useRef, useState } from "react";
-import { FaCalendarAlt, FaShieldAlt, FaUsers } from "react-icons/fa";
-import { cn } from "@/lib/utils";
-import SpotlightCard from "@/components/SpotlightCard";
-import FloatingLines from "@/components/animations/FloatingLines";
+import ScrollFloat from "@/components/animations/ScrollFloat";
+import FloatingLines from "@/components/background/FloatingLines";
+import Counters from "@/components/home/Counters";
+import Cards from "@/components/home/Cards";
 
 export default function Home() {
-  const counterRef = useRef<HTMLDivElement>(null);
-  const [play, setPlay] = useState([false, false, false]);
-
-  useEffect(() => {
-    if (!counterRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setPlay([true, false, false]);
-          setTimeout(() => setPlay([true, true, false]), 750);
-          setTimeout(() => setPlay([true, true, true]), 1500);
-          observer.disconnect();
-        }
-      },
-      {
-        threshold: 0.2,
-      }
-    );
-
-    observer.observe(counterRef.current);
-
-    return () => observer.disconnect();
-  }, []);
-
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [show, setShow] = useState([false, false, false]);
-
-  useEffect(() => {
-    if (!cardRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShow([true, false, false]);
-          setTimeout(() => setShow([true, true, false]), 500);
-          setTimeout(() => setShow([true, true, true]), 1000);
-          observer.disconnect();
-        }
-      },
-      {
-        threshold: 0.2,
-      }
-    );
-
-    observer.observe(cardRef.current);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <>
       <div className="w-full h-[calc(100vh-65px)] absolute">
@@ -107,56 +52,7 @@ export default function Home() {
         >
           Statistiques
         </ScrollFloat>
-        <div className="flex justify-around flex-wrap gap-4 w-full">
-          <div
-            className="flex flex-col items-center justify-center border px-4 py-7 rounded-box bg-base-300 shadow-xl flex-1"
-            ref={counterRef}
-          >
-            <h3 className="text-xl text-center">Serveurs</h3>
-            <Counter
-              value={play[0] ? 130 : 0}
-              places={[100, 10, 1]}
-              fontSize={60}
-              padding={5}
-              gap={10}
-              textColor="white"
-              fontWeight={900}
-              gradientFrom="transparent"
-            />
-          </div>
-          <div
-            className="flex flex-col items-center justify-center border px-4 py-7 rounded-box bg-base-300 shadow-xl flex-1"
-            ref={counterRef}
-          >
-            <h3 className="text-xl text-center">Membres</h3>
-            <Counter
-              value={play[1] ? 125 : 0}
-              places={[100, 10, 1]}
-              fontSize={60}
-              padding={5}
-              gap={10}
-              textColor="white"
-              fontWeight={900}
-              gradientFrom="transparent"
-            />
-          </div>
-          <div
-            className="flex flex-col items-center justify-center border px-4 py-7 rounded-box bg-base-300 shadow-xl flex-1"
-            ref={counterRef}
-          >
-            <h3 className="text-xl text-center">Blacklists</h3>
-            <Counter
-              value={play[2] ? 30 : 0}
-              places={[100, 10, 1]}
-              fontSize={60}
-              padding={5}
-              gap={10}
-              textColor="white"
-              fontWeight={900}
-              gradientFrom="transparent"
-            />
-          </div>
-        </div>
+        <Counters />
       </section>
       <section
         id="cards"
@@ -171,52 +67,7 @@ export default function Home() {
         >
           Pourquoi nous choisir ?
         </ScrollFloat>
-        <div className="flex gap-3 flex-wrap w-full">
-          <SpotlightCard
-            className={cn(
-              "custom-spotlight-card flex-1 transition-all duration-500 flex flex-col gap-3 min-w-75",
-              show[0] ? "opacity-100" : "translate-y-10 opacity-0"
-            )}
-            ref={cardRef}
-          >
-            <FaShieldAlt size={40} className="fill-primary" />
-            <h4 className="text-xl font-semibold">Sécurité</h4>
-            <p className="text-justify">
-              Nous avons un système de signalement qui permet aux membres de
-              signaler les membres problématiques. Après vérification, ces
-              membres peuvent être blacklistés pour protéger la communauté.
-            </p>
-          </SpotlightCard>
-          <SpotlightCard
-            className={cn(
-              "custom-spotlight-card flex-1 transition-all duration-500 flex flex-col gap-3 min-w-75",
-              show[1] ? "opacity-100" : "translate-y-10 opacity-0"
-            )}
-            ref={cardRef}
-          >
-            <FaUsers size={40} className="fill-primary" />
-            <h4 className="text-xl font-semibold">Communauté</h4>
-            <p className="text-justify">
-              Notre grande communauté de fondateurs permet de partager des
-              expériences, des conseils et de l&apos;entraide entre membres.
-            </p>
-          </SpotlightCard>
-          <SpotlightCard
-            className={cn(
-              "custom-spotlight-card flex-1 transition-all duration-500 flex flex-col gap-3 min-w-75",
-              show[2] ? "opacity-100" : "translate-y-10 opacity-0"
-            )}
-            ref={cardRef}
-          >
-            <FaCalendarAlt size={40} className="fill-primary" />
-            <h4 className="text-xl font-semibold">Réunions</h4>
-            <p className="text-justify">
-              Nous organisons régulièrement des réunions pour discuter des
-              problèmes et des solutions, ainsi que pour partager des idées
-              innovantes.
-            </p>
-          </SpotlightCard>
-        </div>
+        <Cards />
       </section>
     </>
   );

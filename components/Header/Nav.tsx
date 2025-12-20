@@ -18,21 +18,37 @@ export default function Nav() {
         </Link>
       </div>
       <div className="flex justify-center items-center">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 hidden sm:flex">
           <li>
             <Link href="/about">À propos</Link>
           </li>
-        </ul>
-        <ul className="menu menu-horizontal px-1">
           <li>
             <Link href="/serveurs">Serveurs</Link>
           </li>
-        </ul>
-        <ul className="menu menu-horizontal px-1">
           <li>
             <Link target="_blank" href="https://discord.gg/P3dcjTuuav">
               Discord
             </Link>
+          </li>
+        </ul>
+        <ul className="menu menu-horizontal px-1 sm:hidden">
+          <li>
+            <details>
+              <summary>Menu</summary>
+              <ul className="bg-base-100 rounded-t-none p-2 w-25">
+                <li>
+                  <Link href="/about">À propos</Link>
+                </li>
+                <li>
+                  <Link href="/serveurs">Serveurs</Link>
+                </li>
+                <li>
+                  <Link target="_blank" href="https://discord.gg/P3dcjTuuav">
+                    Discord
+                  </Link>
+                </li>
+              </ul>
+            </details>
           </li>
         </ul>
         <SignInButton />
