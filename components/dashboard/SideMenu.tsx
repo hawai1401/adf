@@ -1,13 +1,9 @@
-import type { serveur } from "@/lib/userServers";
+import type { serveur } from "@/lib/serveurs/userServers";
 import decodeDiscordPermissions from "@/lib/decodeDiscordPermissions";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  IoHomeOutline,
-  IoSettingsOutline,
-  IoPeopleOutline,
-} from "react-icons/io5";
+import { IoHomeOutline, IoPeopleOutline } from "react-icons/io5";
 
 export default async function SideMenu({
   serveurs,
@@ -22,12 +18,6 @@ export default async function SideMenu({
         <Link href="/dashboard">
           <IoHomeOutline size={20} />
           Accueil
-        </Link>
-      </li>
-      <li>
-        <Link href="/dashboard/serveurs">
-          <IoSettingsOutline size={20} />
-          Gérer mes serveurs
         </Link>
       </li>
       <li className="h-[calc(100%-56px)]">
@@ -53,7 +43,7 @@ export default async function SideMenu({
                     <Link
                       href={`/dashboard/serveurs/${s.id}`}
                       className={cn(
-                        "text-ellipsis whitespace-nowrap overflow-hidden max-w-[172px]",
+                        "text-ellipsis whitespace-nowrap overflow-hidden max-w-43",
                         actual === s.id ? "bg-accent text-accent-content" : ""
                       )}
                     >

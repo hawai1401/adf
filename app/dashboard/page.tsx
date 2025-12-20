@@ -1,19 +1,18 @@
 import SideMenu from "@/components/dashboard/SideMenu";
 import Serveur from "@/components/dashboard/Serveur";
-import decodeDiscordPermissions from "@/lib/decodeDiscordPermissions";
-import AnimatedList from "@/components/AnimatedList";
-import userServers from "@/lib/userServers";
+import AnimatedList from "@/components/animations/AnimatedList";
+import userServers from "@/lib/serveurs/userServers";
 
 export default async function DashBoard() {
   const serveurs = await userServers();
 
   return (
     <>
-      <aside className="fixed top-15 left-0 w-55 h-[calc(100vh-60px)] bg-base-200">
+      <aside className="fixed top-15 left-0 w-55 h-[calc(100vh-60px)] bg-base-200 hidden sm:block">
         <SideMenu serveurs={serveurs} />
       </aside>
 
-      <main className="ml-55 min-h-[calc(100vh-60px)]">
+      <main className="sm:ml-55 min-h-[calc(100vh-60px)]">
         <h1 className="text-xl font-semibold text-center p-2 bg-base-200 w-full">
           Choisissez un serveur à gérer
         </h1>
@@ -23,18 +22,7 @@ export default async function DashBoard() {
           items={serveurs.map((s) => {
             return (
               <Serveur
-                disabled={
-                  !(
-                    (s.owner ||
-                      decodeDiscordPermissions(s.permissions).includes(
-                        "ADMINISTRATOR"
-                      ) ||
-                      decodeDiscordPermissions(s.permissions).includes(
-                        "MANAGE_GUILD"
-                      )) &&
-                    s.approximate_member_count > 200
-                  )
-                }
+                disabled={s.approximate_member_count < 200}
                 key={s.id}
                 logo={
                   s.icon

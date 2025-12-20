@@ -80,7 +80,7 @@ export default function Serveur({
   );
   if (disabled) {
     return (
-      <div className="bg-base-300 p-4 rounded-box flex items-start md:items-center justify-center flex-col gap-4 cursor-pointer hover:scale-[1.02] h-full transition-transform">
+      <div className="bg-base-300 p-4 rounded-box flex items-start md:items-center justify-center flex-col gap-4 cursor-not-allowed hover:scale-[1.02] h-full transition-transform">
         {content}
       </div>
     );

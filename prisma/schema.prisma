@@ -9,36 +9,53 @@ datasource db {
   provider = "postgresql"
 }
 
-model UserToken {
-  id           String @id @unique
-  accessToken  String
-  expiresAt    DateTime
+model serveur {
+  id                  String   @id @unique
+  approuved           Boolean  @default(false)
+  pending             Boolean  @default(true)
+  nom                 String
+  description         String   @default("")
+  description_pending String
+  logoURL             String?
+  badges              badges[]
+  createAt            DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  owner               User     @relation(references: [id], fields: [userId])
+  userId              String
+}
+
+enum badges {
+  Pub
+  Rp
+  Graphisme
+  Communautaire
 }
 
 model User {
-  id            String    @id
-  email         String    @unique
+  id            String   @id
+  email         String   @unique
   name          String?
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean  @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  posts     Post[]
-  sessions  Session[]
-  accounts  Account[]
+  posts    Post[]
+  sessions Session[]
+  accounts Account[]
+  serveurs serveur[]
 
   @@map("user")
 }
 
 model Post {
-  id        String   @id
+  id        String  @id
   title     String
   content   String?
   published Boolean @default(false)
 
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@index([authorId])
   @@map("post")
@@ -54,19 +71,19 @@ model Session {
   userAgent String?
 
   userId String
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("session")
 }
 
 model Account {
-  id                    String   @id
-  accountId             String
-  providerId            String
+  id         String @id
+  accountId  String
+  providerId String
 
   userId String
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   accessToken           String?
   refreshToken          String?
@@ -75,11 +92,11 @@ model Account {
   refreshTokenExpiresAt DateTime?
   scope                 String?
   password              String?
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
-  @@index([userId])
   @@unique([providerId, accountId])
+  @@index([userId])
   @@map("account")
 }
 

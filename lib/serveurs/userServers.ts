@@ -14,6 +14,8 @@ export interface serveur {
   approximate_presence_count: number;
 }
 
+const cache = new Map<string, serveur[]>();
+
 export default async function userServers() {
   const user = await auth.api.getAccessToken({
     headers: await headers(),
@@ -21,6 +23,8 @@ export default async function userServers() {
       providerId: "discord",
     },
   });
+  const cache_value = cache.get(user.accessToken)
+  if (cache_value) return cache_value
   const data = await fetch(
     "https://discord.com/api/v10/users/@me/guilds?with_counts=true",
     {
@@ -30,23 +34,19 @@ export default async function userServers() {
     }
   );
   const serveurs: serveur[] = await data.json();
-  console.log(serveurs, user.accessToken);
-  serveurs.sort((a, b) => {
-    if (
-      (a.owner ||
-        decodeDiscordPermissions(a.permissions).includes("ADMINISTRATOR") ||
-        decodeDiscordPermissions(a.permissions).includes("MANAGE_GUILD")) &&
-      a.approximate_member_count > 200
+  const return_value = serveurs
+    .filter(
+      (s) =>
+        s.owner ||
+        decodeDiscordPermissions(s.permissions).includes("ADMINISTRATOR") ||
+        decodeDiscordPermissions(s.permissions).includes("MANAGE_GUILD")
     )
-      return -1;
-    if (
-      (b.owner ||
-        decodeDiscordPermissions(b.permissions).includes("ADMINISTRATOR") ||
-        decodeDiscordPermissions(b.permissions).includes("MANAGE_GUILD")) &&
-      b.approximate_member_count > 200
-    )
-      return 1;
-    return 0;
-  });
-  return serveurs;
+    .sort((a, b) => b.approximate_member_count - a.approximate_member_count);
+
+  cache.set(user.accessToken, return_value);
+  setTimeout(() => {
+    cache.delete(user.accessToken)
+  }, 60_000 * 5)
+  
+  return return_value;
 }
