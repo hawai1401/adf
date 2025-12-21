@@ -1,7 +1,6 @@
-import parseInline from "@/lib/parseInline";
+import textToMarkdown from "@/lib/textToMarkdown";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { ReactNode } from "react";
 
 export default function Serveur({
   logo,
@@ -26,52 +25,6 @@ export default function Serveur({
     COMMUNAUTAIRE: "info",
   };
 
-  const desc: ReactNode = description.split("\n").map((s, i) => {
-    // Titres
-    if (s.startsWith("### "))
-      return (
-        <div className="text-lg font-semibold" key={i}>
-          {parseInline(s.slice(4))}
-        </div>
-      );
-
-    if (s.startsWith("## "))
-      return (
-        <div className="text-xl font-semibold" key={i}>
-          {parseInline(s.slice(3))}
-        </div>
-      );
-
-    if (s.startsWith("# "))
-      return (
-        <div className="text-2xl font-bold" key={i}>
-          {parseInline(s.slice(2))}
-        </div>
-      );
-
-    // Blockquote >
-    if (s.startsWith("> "))
-      return (
-        <div key={i} className="border-l-4 border-gray-500 pl-3 opacity-90">
-          {parseInline(s.slice(2))}
-        </div>
-      );
-
-    // Listes
-    if (s.startsWith("- ") || s.startsWith("* "))
-      return (
-        <div key={i} className="flex gap-2 pl-2">
-          <span>•</span>
-          <span>{parseInline(s.slice(2))}</span>
-        </div>
-      );
-
-    // Ligne vide
-    if (s.trim() === "") return <br key={i} />;
-
-    // Texte normal
-    return <div key={i}>{parseInline(s)}</div>;
-  });
   return (
     <div className="bg-base-300 p-4 rounded-box flex flex-col w-full sm:w-[calc(100%/2-2%)] lg:w-[calc(100%/3-2%)] gap-4">
       <div className="flex justify-center items-center gap-4 mb-0.5">
@@ -94,7 +47,9 @@ export default function Serveur({
         </div>
       </div>
       <hr className="w-full h-2 border-accent" />
-      <p className="text-justify mb-0.5 flex flex-col">{desc}</p>
+      <div className="text-justify mb-0.5 flex flex-col">
+        {textToMarkdown(description)}
+      </div>
       {badges && badges.length > 0 && (
         <>
           <hr className="w-full h-2 border-accent" />

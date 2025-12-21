@@ -9,6 +9,8 @@ import addServeur from "@/lib/serveurs/addServeur";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Label } from "../ui/label";
+import textToMarkdown from "@/lib/textToMarkdown";
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 
 export default function RequestApprouveForm({
   serveur,
@@ -20,6 +22,7 @@ export default function RequestApprouveForm({
   pending_description?: string | undefined;
 }) {
   const [value, setValue] = useState("");
+  const [action, setAction] = useState<"edit" | "see">("edit");
   const router = useRouter();
   return (
     <form
@@ -42,18 +45,44 @@ export default function RequestApprouveForm({
         );
       }}
     >
-      <CardContent>
-        <div className="grid gap-2">
+      <CardContent className="flex flex-col w-full justify-center items-center gap-5">
+        <div className="flex flex-col gap-3 w-full">
+          {!pending && (
+            <ToggleGroup
+              type="single"
+              defaultValue="edit"
+              className="border self-center"
+              onValueChange={(v: "edit" | "see") => setAction(v)}
+            >
+              <ToggleGroupItem value="edit" aria-label="Toggle edit">
+                Modifier
+              </ToggleGroupItem>
+              <ToggleGroupItem value="see" aria-label="Toggle see">
+                Prévisualiser
+              </ToggleGroupItem>
+            </ToggleGroup>
+          )}
           <Label htmlFor="description">Description</Label>
           {pending ? (
-            <Textarea id="description" disabled value={pending_description} />
+            <div className="border p-4 rounded-box">
+              {textToMarkdown(pending_description!)}
+            </div>
           ) : (
-            <Textarea
-              id="description"
-              required
-              onInput={(e) => setValue(e.currentTarget.value)}
-              maxLength={1020}
-            />
+            <div>
+              {action === "edit" ? (
+                <Textarea
+                  id="description"
+                  defaultValue={value}
+                  required
+                  onInput={(e) => setValue(e.currentTarget.value)}
+                  maxLength={1020}
+                />
+              ) : (
+                <div className="border p-4 rounded-box">
+                  {textToMarkdown(value)}
+                </div>
+              )}
+            </div>
           )}
         </div>
       </CardContent>
