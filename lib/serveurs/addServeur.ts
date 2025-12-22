@@ -8,7 +8,8 @@ import getMember from "../utilisateurs/getMember";
 
 export default async function addServeur(
   serveur: serveur,
-  description: string
+  description: string,
+  tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[]
 ) {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -25,13 +26,13 @@ export default async function addServeur(
       logoURL: serveur.icon
         ? `https://cdn.discordapp.com/icons/${serveur.id}/${serveur.icon}.webp`
         : null,
-      badges: [],
+      badges: tags,
       owner: {
         connect: {
           id: session!.user.id,
         },
       },
-      member_count: serveur.approximate_member_count
+      member_count: serveur.approximate_member_count,
     },
   });
 
@@ -69,6 +70,10 @@ export default async function addServeur(
               {
                 name: "💬 - Description",
                 value: `>>> ${guild.description_pending}`,
+              },
+              {
+                name: "🎈 - Tags",
+                value: `>>> ${tags.map((t) => `- ${t}`).join("\n")}`,
               },
             ],
             author: {

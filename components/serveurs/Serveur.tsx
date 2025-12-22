@@ -53,16 +53,16 @@ export default function Serveur({
       {badges && badges.length > 0 && (
         <>
           <hr className="w-full h-2 border-accent" />
-          <div className="flex flex-wrap items-center justify-center">
+          <div className="flex flex-wrap items-center justify-center gap-2">
             {badges.map((b, i) => (
               <div
                 className={cn(
-                  "badge p-2",
+                  "p-2 badge",
                   `badge-${badges_class[b.toUpperCase() as Uppercase<string>]}`
                 )}
                 key={i}
               >
-                {b.toUpperCase()}
+                {b}
               </div>
             ))}
           </div>

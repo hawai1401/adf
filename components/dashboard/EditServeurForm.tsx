@@ -17,16 +17,36 @@ import editDescription from "@/lib/serveurs/editDescription";
 import { serveur } from "@/lib/serveurs/userServers";
 import { useState } from "react";
 import textToMarkdown from "@/lib/textToMarkdown";
+import { Checkbox } from "../ui/checkbox";
 
 export default function EditServeurForm({
   serveur,
   defaultValue,
+  tags,
 }: {
   serveur: serveur;
   defaultValue?: string | undefined;
+  tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[];
 }) {
   const [value, setValue] = useState(defaultValue ?? "");
   const [action, setAction] = useState<"edit" | "see">("edit");
+  const [checkedTags, setCheckedTags] = useState<{
+    Pub: boolean;
+    Rp: boolean;
+    Graphisme: boolean;
+    Communautaire: boolean;
+  }>({
+    Pub: false,
+    Rp: false,
+    Graphisme: false,
+    Communautaire: false,
+  });
+  const existing_tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[] = [
+    "Pub",
+    "Rp",
+    "Graphisme",
+    "Communautaire",
+  ];
   return (
     <form
       onSubmit={async (e) => {
@@ -88,6 +108,24 @@ export default function EditServeurForm({
                 {textToMarkdown(value)}
               </div>
             )}
+          </div>
+          <div className="flex flex-col justify-start gap-6 w-full">
+            <Label htmlFor="tags">Tags</Label>
+            <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {existing_tags.map((t) => (
+                <div className="flex gap-3" id="tags" key={t}>
+                  <Checkbox
+                    id={t}
+                    defaultChecked={tags.includes(t)}
+                    onCheckedChange={(e: boolean) => {
+                      checkedTags[t] = e;
+                      setCheckedTags(checkedTags);
+                    }}
+                  />
+                  <Label htmlFor={t}>{t}</Label>
+                </div>
+              ))}
+            </div>
           </div>
         </CardContent>
         <CardFooter className="flex-col gap-2">
