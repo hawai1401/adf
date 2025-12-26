@@ -50,7 +50,7 @@ export default async function addServeur(
   if (!member) throw new Error("Member introuvable");
 
   await fetch(
-    `https://discord.com/api/v10/channels/1413831950078185472/messages`,
+    `https://discord.com/api/v10/channels/1454059004807348265/messages`,
     {
       method: "POST",
       headers: {

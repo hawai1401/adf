@@ -32,7 +32,7 @@ export default function useDiscordAuth() {
         toast.error("Vous n'êtes pas dans la liste des membres de l'ADF !");
         return;
       } else {
-        if (!member.roles.includes("1451587139404828692")) {
+        if (!member.roles.includes("1432328421010313256")) {
           await authClient.signOut();
           toast.error(
             "Vous n'êtes pas dans la liste des fondateurs de l'ADF !"

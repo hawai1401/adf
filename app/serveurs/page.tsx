@@ -32,7 +32,7 @@ export default async function Serveurs() {
           <InputGroupText>{serveurs.length} serveurs</InputGroupText>
         </InputGroupAddon>
       </InputGroup>
-      <div className="">
+      <div className="hidden">
         <div className="badge badge-soft badge-primary border border-primary">
           Primary
         </div>

@@ -61,7 +61,7 @@ export default async function editDescription(
   if (fields.length === 0) throw new Error("Aucune données modifiées");
 
   await fetch(
-    `https://discord.com/api/v10/channels/1413831950078185472/messages`,
+    `https://discord.com/api/v10/channels/1454059004807348265/messages`,
     {
       method: "POST",
       headers: {
