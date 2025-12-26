@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ReactNode } from "react";
 
 export default function textToMarkdown(description: string): ReactNode[] {
@@ -112,6 +113,22 @@ export default function textToMarkdown(description: string): ReactNode[] {
 
     // Ligne vide
     if (s.trim() === "") return <br key={i} />;
+
+    if (s.includes("[") && s.includes("]")) {
+      const before = s.slice(0, s.indexOf("["));
+      const content = s.slice(s.indexOf("[") + 1, s.indexOf("]"));
+      const lien = s.slice(s.indexOf("(") + 1, s.indexOf(")"));
+      const after = s.slice(s.indexOf(")") + 1);
+      return (
+        <div className="flex gap-1" key={i}>
+          <span>{before}</span>
+          <Link href={lien} key={i} className="text-blue-400 hover:underline">
+            {content}
+          </Link>
+          <span>{after}</span>
+        </div>
+      );
+    }
 
     // Texte normal
     return <div key={i}>{parseInline(s)}</div>;
