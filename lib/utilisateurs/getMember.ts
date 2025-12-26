@@ -27,7 +27,7 @@ export default async function getMember(user: string) {
 
   if (!cache_value_members) {
     const members: guildMember[] = await fetch(
-      `https://discord.com/api/v10/guilds/1413830273044320391/members/search?query=${user}&limit=1000`,
+      `https://discord.com/api/v10/guilds/1429482388655706235/members/search?query=${user}&limit=1000`,
       {
         headers: {
           Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
