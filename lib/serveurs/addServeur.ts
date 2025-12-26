@@ -5,16 +5,18 @@ import prisma from "../prisma";
 import { serveur } from "./userServers";
 import { auth } from "../auth";
 import getMember from "../utilisateurs/getMember";
+import { ButtonStyle } from "discord-api-types/v10";
 
 export default async function addServeur(
   serveur: serveur,
   description: string,
-  tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[]
+  tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[],
+  link: string
 ) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  await prisma.serveur.upsert({
+  const guild = await prisma.serveur.upsert({
     where: {
       id: serveur.id,
     },
@@ -26,7 +28,8 @@ export default async function addServeur(
       logoURL: serveur.icon
         ? `https://cdn.discordapp.com/icons/${serveur.id}/${serveur.icon}.webp`
         : null,
-      badges: tags,
+      badges_pending: tags,
+      link_pending: link,
       owner: {
         connect: {
           id: session!.user.id,
@@ -36,12 +39,6 @@ export default async function addServeur(
     },
   });
 
-  const guild = await prisma.serveur.findUnique({
-    where: {
-      id: serveur.id,
-    },
-  });
-  if (!guild) throw new Error("Serveur introuvable");
   const owner = await prisma.user.findUnique({
     where: {
       id: guild!.userId,
@@ -75,6 +72,10 @@ export default async function addServeur(
                 name: "🎈 - Tags",
                 value: `>>> ${tags.map((t) => `- ${t}`).join("\n")}`,
               },
+              {
+                name: "🔗 - Lien",
+                value: `> ${link}`,
+              },
             ],
             author: {
               name: `${owner.name!} (${member.user.id})`,
@@ -91,18 +92,27 @@ export default async function addServeur(
             type: 1,
             components: [
               {
-                style: 3,
+                style: ButtonStyle.Success,
                 type: 2,
                 flowId: "248923185607610387",
                 custom_id: `allowed_${serveur.id}`,
                 label: "Accepter",
               },
               {
-                style: 4,
+                style: ButtonStyle.Danger,
                 type: 2,
                 flowId: "248923401714929685",
                 custom_id: `denied_${serveur.id}`,
                 label: "Refuser",
+              },
+              {
+                style: ButtonStyle.Link,
+                type: 2,
+                url: link,
+                label: "Rejoindre le serveur",
+                emoji: {
+                  name: "🔗",
+                },
               },
             ],
           },

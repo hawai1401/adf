@@ -12,19 +12,24 @@ import { Label } from "../ui/label";
 import textToMarkdown from "@/lib/textToMarkdown";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
+import { cn } from "@/lib/utils";
 
 export default function RequestApprouveForm({
   serveur,
   pending,
   pending_description,
   tags,
+  link: lien,
 }: {
   serveur: serveur;
   pending: boolean;
-  pending_description?: string | undefined;
+  pending_description: string | undefined;
   tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[];
+  link: string | undefined;
 }) {
-  const [value, setValue] = useState("");
+  const [description, setDescription] = useState("");
+  const [link, setLink] = useState("");
   const [action, setAction] = useState<"edit" | "see">("edit");
   const [checkedTags, setCheckedTags] = useState<{
     Pub: boolean;
@@ -64,15 +69,16 @@ export default function RequestApprouveForm({
                     key as "Pub" | "Rp" | "Graphisme" | "Communautaire"
                   );
               }
-              addServeur(serveur, value, tags)
+              addServeur(serveur, description, tags, link)
                 .then(() => res())
+                .catch(() => rej())
                 .finally(() => router.refresh())
-                .catch(() => rej());
             }),
           {
             loading: "Envoi en cours...",
             success: "Demande envoyée avec succès !",
-            error: "Une erreur est survenue lors de l'envoi de la demande !",
+            error:
+              "Une erreur est survenue lors de l'enregistrement des informations !",
           }
         );
       }}
@@ -104,14 +110,14 @@ export default function RequestApprouveForm({
               {action === "edit" ? (
                 <Textarea
                   id="description"
-                  defaultValue={value}
+                  defaultValue={description}
                   required
-                  onInput={(e) => setValue(e.currentTarget.value)}
+                  onInput={(e) => setDescription(e.currentTarget.value)}
                   maxLength={1020}
                 />
               ) : (
                 <div className="border p-4 rounded-box">
-                  {textToMarkdown(value)}
+                  {textToMarkdown(description)}
                 </div>
               )}
             </div>
@@ -135,6 +141,21 @@ export default function RequestApprouveForm({
               </div>
             ))}
           </div>
+        </div>
+        <div
+          className={cn(
+            "flex flex-col gap-3 w-full",
+            pending ? "cursor-not-allowed" : ""
+          )}
+        >
+          <Label htmlFor="link">Lien</Label>
+          <Input
+            id="link"
+            required
+            disabled={pending}
+            defaultValue={lien}
+            onInput={(e) => setLink(e.currentTarget.value)}
+          />
         </div>
       </CardContent>
       <CardFooter className="flex-col gap-2">
