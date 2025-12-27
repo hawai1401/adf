@@ -21,7 +21,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { existing_tags, tags } from "@/lib/serveurs/addServeur";
+import { existing_tags, tags } from "@/lib/tags";
 
 export default function EditServeurForm({
   serveur,
@@ -128,7 +128,7 @@ export default function EditServeurForm({
           <div className="flex flex-col justify-start gap-5 w-full">
             <Label htmlFor="tags">Tags</Label>
             <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {existing_tags.map((t) => (
+              {existing_tags.every((t) => (
                 <div className="flex gap-3" id="tags" key={t}>
                   <Checkbox
                     id={t}

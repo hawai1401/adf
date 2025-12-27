@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Hr from "./Hr";
 import { Button } from "../animate-ui/components/buttons/button";
-import { tags } from "@/lib/serveurs/addServeur";
+import { tags } from "@/lib/tags";
 
 export default function Serveur({
   logo,

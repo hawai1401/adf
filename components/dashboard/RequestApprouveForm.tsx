@@ -4,7 +4,7 @@ import { serveur } from "@/lib/serveurs/userServers";
 import { CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import addServeur, { existing_tags, tags } from "@/lib/serveurs/addServeur";
+import addServeur from "@/lib/serveurs/addServeur";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Label } from "../ui/label";
@@ -19,6 +19,7 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "../ui/input-group";
+import { existing_tags, tags } from "@/lib/tags";
 
 export default function RequestApprouveForm({
   serveur,

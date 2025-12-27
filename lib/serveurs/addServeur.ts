@@ -6,20 +6,7 @@ import { serveur } from "./userServers";
 import { auth } from "../auth";
 import getMember from "../utilisateurs/getMember";
 import { ButtonStyle } from "discord-api-types/v10";
-
-export const existing_tags = [
-  "E_Sport",
-  "Pub",
-  "Rp",
-  "Art",
-  "Communautaire",
-  "Gaming",
-  "Informatique",
-  "Micronation",
-  "Sport",
-  "Audiovisuel",
-] as const;
-export type tags = (typeof existing_tags)[number];
+import { tags } from "../tags";
 
 export default async function addServeur(
   serveur: serveur,
