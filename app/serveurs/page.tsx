@@ -66,7 +66,7 @@ export default async function Serveurs() {
             name={s.nom}
             member_count={s.member_count}
             description={s.description}
-            badges={s.badges}
+            tags={s.tags}
             link={s.link}
           />
         ))}

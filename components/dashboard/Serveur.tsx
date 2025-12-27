@@ -8,7 +8,6 @@ export default function Serveur({
   name,
   member_count,
   description,
-  badges,
   id,
 }: {
   disabled?: boolean | null | undefined;
@@ -16,18 +15,8 @@ export default function Serveur({
   name: string;
   member_count: number | string;
   description?: string | null | undefined;
-  badges?:
-    | Array<"Pub" | "Rp" | "Graphisme" | "Communautaire">
-    | null
-    | undefined;
   id: string;
 }) {
-  const badges_class: Record<Uppercase<string>, string> = {
-    PUB: "error",
-    RP: "neutral",
-    GRAPHISME: "primary",
-    COMMUNAUTAIRE: "info",
-  };
   const content = (
     <>
       <div className="flex justify-center items-center gap-4 mb-0.5">
@@ -56,24 +45,6 @@ export default function Serveur({
         <>
           <hr className="w-full h-2 border-accent" />
           <p className="text-justify mb-0.5">{description}</p>
-        </>
-      )}
-      {badges && (
-        <>
-          <hr className="w-full h-2 border-accent" />
-          <div className="flex flex-wrap items-center justify-center">
-            {badges.map((b, i) => (
-              <div
-                className={cn(
-                  "badge p-2",
-                  `badge-${badges_class[b.toUpperCase() as Uppercase<string>]}`
-                )}
-                key={i}
-              >
-                {b.toUpperCase()}
-              </div>
-            ))}
-          </div>
         </>
       )}
     </>

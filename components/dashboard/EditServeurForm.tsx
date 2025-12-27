@@ -21,6 +21,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { existing_tags, tags } from "@/lib/serveurs/addServeur";
 
 export default function EditServeurForm({
   serveur,
@@ -31,32 +32,16 @@ export default function EditServeurForm({
 }: {
   serveur: serveur;
   defaultDescription: string;
-  tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[];
+  tags: tags[];
   link: string | undefined;
   pending: boolean;
 }) {
   const [description, setDescription] = useState(defaultDescription ?? "");
   const [link, setLink] = useState(lien ?? "");
   const [action, setAction] = useState<"edit" | "see">("edit");
-  const [checkedTags, setCheckedTags] = useState<{
-    Pub: boolean;
-    Rp: boolean;
-    Graphisme: boolean;
-    Communautaire: boolean;
-  }>({
-    Pub: tags.includes("Pub"),
-    Rp: tags.includes("Rp"),
-    Graphisme: tags.includes("Graphisme"),
-    Communautaire: tags.includes("Communautaire"),
-  });
+  const [checkedTags, setCheckedTags] = useState<tags[]>([]);
   const [isEdited, setIsEdited] = useState(false);
   const router = useRouter();
-  const existing_tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[] = [
-    "Pub",
-    "Rp",
-    "Graphisme",
-    "Communautaire",
-  ];
   return (
     <form
       onSubmit={async (e) => {
@@ -64,27 +49,14 @@ export default function EditServeurForm({
         toast.promise<void>(
           () =>
             new Promise((res, rej) => {
-              const new_tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[] =
-                [];
-              for (const key in checkedTags) {
-                const element =
-                  checkedTags[
-                    key as "Pub" | "Rp" | "Graphisme" | "Communautaire"
-                  ];
-                if (element)
-                  new_tags.push(
-                    key as "Pub" | "Rp" | "Graphisme" | "Communautaire"
-                  );
-              }
-
               if (
                 description === defaultDescription &&
                 link === lien &&
-                new_tags.length === tags.length &&
-                new_tags.sort().join() === tags.sort().join()
+                checkedTags.length === tags.length &&
+                checkedTags.sort().join() === tags.sort().join()
               )
                 rej();
-              editDescription(serveur, description, new_tags, link)
+              editDescription(serveur, description, checkedTags, link)
                 .then(() => res())
                 .catch(() => rej())
                 .finally(() => router.refresh());
@@ -163,9 +135,12 @@ export default function EditServeurForm({
                     defaultChecked={tags.includes(t)}
                     disabled={pending}
                     onCheckedChange={(e: boolean) => {
+                      setCheckedTags(
+                        e
+                          ? [...checkedTags, t]
+                          : checkedTags.filter((v) => v !== t)
+                      );
                       setIsEdited(true);
-                      checkedTags[t] = e;
-                      setCheckedTags(checkedTags);
                     }}
                   />
                   <Label htmlFor={t}>{t}</Label>
@@ -186,6 +161,12 @@ export default function EditServeurForm({
               disabled={pending}
               defaultValue={link}
               onInput={(e) => setLink(e.currentTarget.value)}
+              onBlur={() => {
+                if (!link.startsWith("https://discord.")) {
+                  toast.error("Lien invalide !");
+                  setIsEdited(false);
+                }
+              }}
             />
           </div>
         </CardContent>

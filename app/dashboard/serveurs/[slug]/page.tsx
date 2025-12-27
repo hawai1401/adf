@@ -53,7 +53,7 @@ export default async function Serveurs({
             <EditServeurForm
               serveur={s}
               defaultDescription={s_db.description}
-              tags={s_db.badges}
+              tags={s_db.tags}
               link={s_db.link}
               pending={s_db.pending}
             />
@@ -75,7 +75,7 @@ export default async function Serveurs({
                   serveur={s}
                   pending={s_db?.pending ?? false}
                   pending_description={s_db?.description_pending}
-                  tags={s_db?.badges ?? []}
+                  tags={s_db?.tags ?? []}
                   link={s_db?.link}
                 />
               </Card>

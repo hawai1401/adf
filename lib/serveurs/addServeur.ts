@@ -7,10 +7,24 @@ import { auth } from "../auth";
 import getMember from "../utilisateurs/getMember";
 import { ButtonStyle } from "discord-api-types/v10";
 
+export const existing_tags = [
+  "E_Sport",
+  "Pub",
+  "Rp",
+  "Art",
+  "Communautaire",
+  "Gaming",
+  "Informatique",
+  "Micronation",
+  "Sport",
+  "Audiovisuel",
+] as const;
+export type tags = (typeof existing_tags)[number];
+
 export default async function addServeur(
   serveur: serveur,
   description: string,
-  tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[],
+  tags: tags[],
   link: string
 ) {
   const session = await auth.api.getSession({
@@ -28,7 +42,7 @@ export default async function addServeur(
       logoURL: serveur.icon
         ? `https://cdn.discordapp.com/icons/${serveur.id}/${serveur.icon}.webp`
         : null,
-      badges_pending: tags,
+      tags,
       link_pending: link,
       owner: {
         connect: {

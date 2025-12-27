@@ -4,26 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import Hr from "./Hr";
 import { Button } from "../animate-ui/components/buttons/button";
+import { tags } from "@/lib/serveurs/addServeur";
 
 export default function Serveur({
   logo,
   name,
   member_count,
   description,
-  badges,
+  tags,
   link,
 }: {
   logo?: string | null | undefined;
   name: string;
   member_count: number | string;
   description: string;
-  badges?:
-    | Array<"Pub" | "Rp" | "Graphisme" | "Communautaire">
-    | null
-    | undefined;
+  tags?: tags[] | null | undefined;
   link: string;
 }) {
-  const badges_class: Record<Uppercase<string>, string> = {
+  const tags_class: Record<Uppercase<string>, string> = {
     PUB: "error",
     RP: "secondary",
     GRAPHISME: "primary",
@@ -58,16 +56,16 @@ export default function Serveur({
           </Button>
         </div>
       </div>
-      {badges && badges.length > 0 && (
+      {tags && tags.length > 0 && (
         <>
           <Hr />
           <div className="flex flex-wrap items-center justify-center gap-2">
-            {badges.map((b, i) => (
+            {tags.map((b, i) => (
               <div
                 className={cn(
                   "p-4 badge badge-soft border",
-                  `badge-${badges_class[b.toUpperCase() as Uppercase<string>]}`,
-                  `border-${badges_class[b.toUpperCase() as Uppercase<string>]}`
+                  `badge-${tags_class[b.toUpperCase() as Uppercase<string>]}`,
+                  `border-${tags_class[b.toUpperCase() as Uppercase<string>]}`
                 )}
                 key={i}
               >
@@ -78,9 +76,7 @@ export default function Serveur({
         </>
       )}
       <Hr />
-      <div className="flex flex-col p-2">
-        {textToMarkdown(description)}
-      </div>
+      <div className="flex flex-col p-2">{textToMarkdown(description)}</div>
     </div>
   );
 }

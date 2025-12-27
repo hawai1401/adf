@@ -19,7 +19,7 @@ export default async function Home() {
   });
 
   const guild: serveur = await fetch(
-    `https://discord.com/api/v10/guilds/1413830273044320391?with_counts=true`,
+    `https://discord.com/api/v10/guilds/1429482388655706235?with_counts=true`,
     {
       headers: {
         Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,

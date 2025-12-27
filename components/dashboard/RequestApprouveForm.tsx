@@ -2,10 +2,9 @@
 
 import { serveur } from "@/lib/serveurs/userServers";
 import { CardContent, CardFooter } from "../ui/card";
-import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import addServeur from "@/lib/serveurs/addServeur";
+import addServeur, { existing_tags, tags } from "@/lib/serveurs/addServeur";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Label } from "../ui/label";
@@ -14,41 +13,32 @@ import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroupTextarea,
+} from "../ui/input-group";
 
 export default function RequestApprouveForm({
   serveur,
   pending,
   pending_description,
-  tags,
+  tags: tags,
   link: lien,
 }: {
   serveur: serveur;
   pending: boolean;
   pending_description: string | undefined;
-  tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[];
+  tags: tags[];
   link: string | undefined;
 }) {
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
   const [action, setAction] = useState<"edit" | "see">("edit");
-  const [checkedTags, setCheckedTags] = useState<{
-    Pub: boolean;
-    Rp: boolean;
-    Graphisme: boolean;
-    Communautaire: boolean;
-  }>({
-    Pub: false,
-    Rp: false,
-    Graphisme: false,
-    Communautaire: false,
-  });
+  const [checkedTags, setCheckedTags] = useState<tags[]>([]);
+  const [isEdited, setIsEdited] = useState(false);
   const router = useRouter();
-  const existing_tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[] = [
-    "Pub",
-    "Rp",
-    "Graphisme",
-    "Communautaire",
-  ];
   return (
     <form
       className="flex flex-col gap-4"
@@ -56,24 +46,12 @@ export default function RequestApprouveForm({
         e.preventDefault();
         toast.promise<void>(
           () =>
-            new Promise((res, rej) => {
-              const tags: ("Pub" | "Rp" | "Graphisme" | "Communautaire")[] = [];
-              for (const key in checkedTags) {
-                if (!Object.hasOwn(checkedTags, key)) continue;
-                const element =
-                  checkedTags[
-                    key as "Pub" | "Rp" | "Graphisme" | "Communautaire"
-                  ];
-                if (element)
-                  tags.push(
-                    key as "Pub" | "Rp" | "Graphisme" | "Communautaire"
-                  );
-              }
-              addServeur(serveur, description, tags, link)
+            new Promise((res, rej) =>
+              addServeur(serveur, description, checkedTags, link)
                 .then(() => res())
                 .catch(() => rej())
                 .finally(() => router.refresh())
-            }),
+            ),
           {
             loading: "Envoi en cours...",
             success: "Demande envoyée avec succès !",
@@ -108,13 +86,34 @@ export default function RequestApprouveForm({
           ) : (
             <div>
               {action === "edit" ? (
-                <Textarea
-                  id="description"
-                  defaultValue={description}
-                  required
-                  onInput={(e) => setDescription(e.currentTarget.value)}
-                  maxLength={1020}
-                />
+                <InputGroup>
+                  <InputGroupTextarea
+                    id="description"
+                    defaultValue={description}
+                    required
+                    onInput={(e) => {
+                      const value = e.currentTarget.value;
+                      if (value.length > 0) setIsEdited(true);
+                      setDescription(value);
+                    }}
+                    maxLength={1020}
+                  />
+                  <InputGroupAddon align="block-end" className="justify-end">
+                    <InputGroupText
+                      className={
+                        description.length === 1020
+                          ? "text-red-500"
+                          : description.length > 1000
+                          ? "text-red-400"
+                          : description.length > 980
+                          ? "text-orange-400"
+                          : ""
+                      }
+                    >
+                      {description.length}/1020
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
               ) : (
                 <div className="border p-4 rounded-box">
                   {textToMarkdown(description)}
@@ -133,8 +132,12 @@ export default function RequestApprouveForm({
                   disabled={pending}
                   defaultChecked={tags.includes(t)}
                   onCheckedChange={(e: boolean) => {
-                    checkedTags[t] = e;
-                    setCheckedTags(checkedTags);
+                    setCheckedTags(
+                      e
+                        ? [...checkedTags, t]
+                        : checkedTags.filter((v) => v !== t)
+                    );
+                    setIsEdited(true);
                   }}
                 />
                 <Label htmlFor={t}>{t}</Label>
@@ -155,6 +158,12 @@ export default function RequestApprouveForm({
             disabled={pending}
             defaultValue={lien}
             onInput={(e) => setLink(e.currentTarget.value)}
+            onBlur={() => {
+              if (!link.startsWith("https://discord.")) {
+                setIsEdited(false);
+                toast.error("Lien invalide !");
+              }
+            }}
           />
         </div>
       </CardContent>
@@ -162,7 +171,7 @@ export default function RequestApprouveForm({
         <Button
           type="submit"
           className="w-full cursor-pointer"
-          disabled={pending}
+          disabled={pending || !isEdited}
         >
           {pending ? "Demande en cours de traitement" : "Envoyer une demande"}
         </Button>

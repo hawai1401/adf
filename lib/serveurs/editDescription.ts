@@ -4,13 +4,12 @@ import { ButtonStyle } from "discord-api-types/v10";
 import prisma from "../prisma";
 import { serveur } from "./userServers";
 import getMember from "../utilisateurs/getMember";
-
-type badges = "Pub" | "Rp" | "Graphisme" | "Communautaire";
+import { tags } from "./addServeur";
 
 export default async function editDescription(
   serveur: serveur,
   description: string,
-  badges: badges[],
+  tags: tags[],
   link: string
 ) {
   if (description.length === 0) return;
@@ -24,7 +23,7 @@ export default async function editDescription(
       logoURL: serveur.icon
         ? `https://cdn.discordapp.com/icons/${serveur.id}/${serveur.icon}.webp`
         : null,
-      badges_pending: badges,
+      tags_pending: tags,
       link_pending: link,
       member_count: serveur.approximate_member_count,
       pending: true,
@@ -47,10 +46,10 @@ export default async function editDescription(
       name: "💬 - Description",
       value: `>>> ${guild.description_pending}`,
     });
-  if (guild.badges !== guild.badges_pending)
+  if (guild.tags !== guild.tags_pending)
     fields.push({
       name: "🎈 - Tags",
-      value: `>>> ${badges.map((t) => `- ${t}`).join("\n")}`,
+      value: `>>> ${tags.map((t) => `- ${t}`).join("\n")}`,
     });
   if (guild.link !== guild.link_pending)
     fields.push({
