@@ -1,6 +1,8 @@
 import Content from "@/components/serveurs/Content";
 import prisma from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function Serveurs() {
   const serveurs = await prisma.serveur.findMany({
     where: {
