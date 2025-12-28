@@ -29,7 +29,7 @@ export default function Serveur({
             alt="Logo"
             className={cn(
               "rounded-full border border-accent",
-              disabled ? "grayscale" : ""
+              disabled && !s_db?.whitelist ? "grayscale" : ""
             )}
           />
         ) : (

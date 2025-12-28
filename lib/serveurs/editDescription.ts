@@ -27,6 +27,7 @@ export default async function editDescription(
       link_pending: link,
       member_count: serveur.approximate_member_count,
       pending: true,
+      nom: serveur.name,
     },
   });
 
