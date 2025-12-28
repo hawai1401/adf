@@ -1,3 +1,4 @@
+import { setDiscordId } from "@/lib/setDiscordId";
 import authClient from "@/lib/auth-client";
 import getMember from "@/lib/utilisateurs/getMember";
 import { User } from "better-auth";
@@ -40,6 +41,7 @@ export default function useDiscordAuth() {
           return;
         }
       }
+      setDiscordId(session.data.user.id);
       setUser(session.data.user);
     } else {
       setUser(null);
