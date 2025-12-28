@@ -21,7 +21,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { existing_tags, tags } from "@/lib/tags";
+import { existing_tags, tag } from "@/types/tags";
 
 export default function EditServeurForm({
   serveur,
@@ -32,14 +32,14 @@ export default function EditServeurForm({
 }: {
   serveur: serveur;
   defaultDescription: string;
-  tags: tags[];
+  tags: tag[];
   link: string | undefined;
   pending: boolean;
 }) {
   const [description, setDescription] = useState(defaultDescription ?? "");
   const [link, setLink] = useState(lien ?? "");
   const [action, setAction] = useState<"edit" | "see">("edit");
-  const [checkedTags, setCheckedTags] = useState<tags[]>([]);
+  const [checkedTags, setCheckedTags] = useState<tag[]>([]);
   const [isEdited, setIsEdited] = useState(false);
   const router = useRouter();
   return (

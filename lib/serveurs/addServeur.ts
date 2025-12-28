@@ -6,12 +6,12 @@ import { serveur } from "./userServers";
 import { auth } from "../auth";
 import getMember from "../utilisateurs/getMember";
 import { ButtonStyle } from "discord-api-types/v10";
-import { tags } from "../tags";
+import { tag } from "../../types/tags";
 
 export default async function addServeur(
   serveur: serveur,
   description: string,
-  tags: tags[],
+  tags: tag[],
   link: string
 ) {
   const session = await auth.api.getSession({

@@ -4,12 +4,12 @@ import { ButtonStyle } from "discord-api-types/v10";
 import prisma from "../prisma";
 import { serveur } from "./userServers";
 import getMember from "../utilisateurs/getMember";
-import { tags } from "../tags";
+import { tag } from "../../types/tags";
 
 export default async function editDescription(
   serveur: serveur,
   description: string,
-  tags: tags[],
+  tags: tag[],
   link: string
 ) {
   if (description.length === 0) return;

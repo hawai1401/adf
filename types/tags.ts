@@ -10,4 +10,4 @@ export const existing_tags = [
   "Sport",
   "Audiovisuel",
 ] as const;
-export type tags = (typeof existing_tags)[number];
+export type tag = (typeof existing_tags)[number];

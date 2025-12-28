@@ -19,7 +19,7 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "../ui/input-group";
-import { existing_tags, tags } from "@/lib/tags";
+import { existing_tags, tag } from "@/types/tags";
 
 export default function RequestApprouveForm({
   serveur,
@@ -31,13 +31,13 @@ export default function RequestApprouveForm({
   serveur: serveur;
   pending: boolean;
   pending_description: string | undefined;
-  tags: tags[];
+  tags: tag[];
   link: string | undefined;
 }) {
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
   const [action, setAction] = useState<"edit" | "see">("edit");
-  const [checkedTags, setCheckedTags] = useState<tags[]>([]);
+  const [checkedTags, setCheckedTags] = useState<tag[]>([]);
   const [isEdited, setIsEdited] = useState(false);
   const router = useRouter();
   return (
