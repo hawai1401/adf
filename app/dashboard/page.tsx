@@ -2,14 +2,22 @@ import SideMenu from "@/components/dashboard/SideMenu";
 import Serveur from "@/components/dashboard/Serveur";
 import AnimatedList from "@/components/animations/AnimatedList";
 import userServers from "@/lib/serveurs/userServers";
+import prisma from "@/lib/prisma";
 
 export default async function DashBoard() {
   const serveurs = await userServers();
+  const serveurs_db = await prisma.serveur.findMany({
+    where: {
+      id: {
+        in: serveurs.map((s) => s.id),
+      },
+    },
+  });
 
   return (
     <>
       <aside className="fixed top-15 left-0 w-55 h-[calc(100vh-60px)] bg-base-200 hidden sm:block">
-        <SideMenu serveurs={serveurs} />
+        <SideMenu serveurs={serveurs} serveurs_db={serveurs_db} />
       </aside>
 
       <main className="sm:ml-55 min-h-[calc(100vh-60px)]">
@@ -32,6 +40,7 @@ export default async function DashBoard() {
                 name={s.name}
                 member_count={s.approximate_member_count}
                 id={s.id}
+                s_db={serveurs_db.find((v) => v.id === s.id)}
               />
             );
           })}

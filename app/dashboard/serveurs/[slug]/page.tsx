@@ -19,19 +19,25 @@ export default async function Serveurs({
 }) {
   const { slug } = await params;
   const serveurs = await userServers();
-
+  const serveurs_db = await prisma.serveur.findMany({
+    where: {
+      id: {
+        in: serveurs.map((s) => s.id),
+      },
+    },
+  });
   const s = serveurs.find((s) => s.id === slug)!;
-  if (s.approximate_member_count < 200)
-    redirect("/dashboard", RedirectType.replace);
   const s_db = await prisma.serveur.findUnique({
     where: {
       id: s.id,
     },
   });
+  if (s.approximate_member_count < 200 && !s_db?.whitelist)
+    redirect("/dashboard", RedirectType.replace);
   return (
     <>
       <aside className="fixed top-15 left-0 w-55 h-[calc(100vh-60px)] bg-base-200 hidden sm:block">
-        <SideMenu serveurs={serveurs} actual={slug} />
+        <SideMenu serveurs={serveurs} serveurs_db={serveurs_db} actual={slug} />
       </aside>
 
       <main className="sm:ml-55 min-h-[calc(100vh-60px)]">

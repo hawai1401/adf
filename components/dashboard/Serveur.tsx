@@ -1,21 +1,22 @@
+import { serveur } from "@/generated/prisma/client";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Serveur({
-  disabled,
-  logo,
+  id,
   name,
   member_count,
-  description,
-  id,
+  s_db,
+  disabled,
+  logo,
 }: {
-  disabled?: boolean | null | undefined;
-  logo?: string | null | undefined;
+  id: string;
   name: string;
   member_count: number | string;
-  description?: string | null | undefined;
-  id: string;
+  s_db?: serveur | undefined;
+  disabled?: boolean | null | undefined;
+  logo?: string | null | undefined;
 }) {
   const content = (
     <>
@@ -41,15 +42,9 @@ export default function Serveur({
           <p>{member_count} membres</p>
         </div>
       </div>
-      {!disabled && description && (
-        <>
-          <hr className="w-full h-2 border-accent" />
-          <p className="text-justify mb-0.5">{description}</p>
-        </>
-      )}
     </>
   );
-  if (disabled) {
+  if (disabled && !s_db?.whitelist) {
     return (
       <div className="bg-base-300 p-4 rounded-box flex items-start md:items-center justify-center flex-col gap-4 cursor-not-allowed hover:scale-[1.02] h-full transition-transform">
         {content}
