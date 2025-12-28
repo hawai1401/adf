@@ -11,6 +11,8 @@ import Cards from "@/components/home/Cards";
 import prisma from "@/lib/prisma";
 import { serveur } from "@/lib/serveurs/userServers";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const serveurs = await prisma.serveur.count({
     where: {
