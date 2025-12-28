@@ -75,8 +75,8 @@ export default async function Serveurs({
                   serveur={s}
                   pending={s_db?.pending ?? false}
                   pending_description={s_db?.description_pending}
-                  tags={s_db?.tags ?? []}
-                  link={s_db?.link}
+                  tags={s_db?.tags_pending ?? []}
+                  link={s_db?.link_pending}
                 />
               </Card>
             </>

@@ -10,7 +10,12 @@ import {
 } from "@/components/ui/card";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroupTextarea,
+} from "../ui/input-group";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import editDescription from "@/lib/serveurs/editDescription";
@@ -110,13 +115,34 @@ export default function EditServeurForm({
             ) : (
               <div>
                 {action === "edit" ? (
-                  <Textarea
+                 <InputGroup>
+                  <InputGroupTextarea
                     id="description"
                     defaultValue={description}
                     required
-                    onInput={(e) => setDescription(e.currentTarget.value)}
+                    onInput={(e) => {
+                      const value = e.currentTarget.value;
+                      if (value.length > 0) setIsEdited(true);
+                      setDescription(value);
+                    }}
                     maxLength={1020}
                   />
+                  <InputGroupAddon align="block-end" className="justify-end">
+                    <InputGroupText
+                      className={
+                        description.length === 1020
+                          ? "text-red-500"
+                          : description.length > 1000
+                          ? "text-red-400"
+                          : description.length > 980
+                          ? "text-orange-400"
+                          : ""
+                      }
+                    >
+                      {description.length}/1020
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
                 ) : (
                   <div className="border p-4 rounded-box">
                     {textToMarkdown(description)}
@@ -128,7 +154,7 @@ export default function EditServeurForm({
           <div className="flex flex-col justify-start gap-5 w-full">
             <Label htmlFor="tags">Tags</Label>
             <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {existing_tags.every((t) => (
+              {existing_tags.map((t) => (
                 <div className="flex gap-3" id="tags" key={t}>
                   <Checkbox
                     id={t}

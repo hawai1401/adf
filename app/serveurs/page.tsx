@@ -1,12 +1,5 @@
-import Serveur from "@/components/serveurs/Serveur";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-  InputGroupText,
-} from "@/components/ui/input-group";
+import Content from "@/components/serveurs/Content";
 import prisma from "@/lib/prisma";
-import { FaSearch } from "react-icons/fa";
 
 export default async function Serveurs() {
   const serveurs = await prisma.serveur.findMany({
@@ -23,15 +16,6 @@ export default async function Serveurs() {
           Voici les serveurs des membres de notre assemblée.
         </p>
       </div>
-      <InputGroup className="rounded-full">
-        <InputGroupInput placeholder="Rechercher..." />
-        <InputGroupAddon>
-          <FaSearch />
-        </InputGroupAddon>
-        <InputGroupAddon align="inline-end" className="mb-1">
-          <InputGroupText>{serveurs.length} serveurs</InputGroupText>
-        </InputGroupAddon>
-      </InputGroup>
       <div className="hidden">
         <div className="badge badge-soft badge-primary border border-primary">
           Primary
@@ -41,9 +25,6 @@ export default async function Serveurs() {
         </div>
         <div className="badge badge-soft badge-accent border border-accent">
           Accent
-        </div>
-        <div className="badge badge-soft badge-neutral border border-neutral">
-          Neutral
         </div>
         <div className="badge badge-soft badge-info border border-info">
           Info
@@ -58,19 +39,7 @@ export default async function Serveurs() {
           Error
         </div>
       </div>
-      <div className="grid md:grid-cols-2 lg-grid-cols-3 gap-4">
-        {serveurs.map((s) => (
-          <Serveur
-            key={s.id}
-            logo={s.logoURL}
-            name={s.nom}
-            member_count={s.member_count}
-            description={s.description}
-            tags={s.tags}
-            link={s.link}
-          />
-        ))}
-      </div>
+      <Content serveurs={serveurs} />
     </main>
   );
 }

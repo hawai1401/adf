@@ -163,6 +163,8 @@ export default function RequestApprouveForm({
               if (!link.startsWith("https://discord.")) {
                 setIsEdited(false);
                 toast.error("Lien invalide !");
+              } else {
+                setIsEdited(true)
               }
             }}
           />

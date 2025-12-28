@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Hr from "./Hr";
 import { Button } from "../animate-ui/components/buttons/button";
-import { tags } from "@/lib/tags";
+import { tag } from "@/types/tags";
 
 export default function Serveur({
   logo,
@@ -18,14 +18,20 @@ export default function Serveur({
   name: string;
   member_count: number | string;
   description: string;
-  tags?: tags[] | null | undefined;
+  tags?: tag[] | null | undefined;
   link: string;
 }) {
-  const tags_class: Record<Uppercase<string>, string> = {
-    PUB: "error",
-    RP: "secondary",
-    GRAPHISME: "primary",
-    COMMUNAUTAIRE: "info",
+  const tags_class: Record<tag, string> = {
+    E_Sport: "primary",
+    Pub: "secondary",
+    Rp: "accent",
+    Art: "info",
+    Communautaire: "success",
+    Gaming: "warning",
+    Informatique: "error",
+    Micronation: "success",
+    Sport: "primary",
+    Audiovisuel: "warning",
   };
 
   return (
@@ -60,16 +66,16 @@ export default function Serveur({
         <>
           <Hr />
           <div className="flex flex-wrap items-center justify-center gap-2">
-            {tags.map((b, i) => (
+            {tags.map((t, i) => (
               <div
                 className={cn(
                   "p-4 badge badge-soft border",
-                  `badge-${tags_class[b.toUpperCase() as Uppercase<string>]}`,
-                  `border-${tags_class[b.toUpperCase() as Uppercase<string>]}`
+                  `badge-${tags_class[t]}`,
+                  `border-${tags_class[t]}`
                 )}
                 key={i}
               >
-                {b}
+                {t}
               </div>
             ))}
           </div>

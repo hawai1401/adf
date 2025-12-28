@@ -29,7 +29,7 @@ export default async function addServeur(
       logoURL: serveur.icon
         ? `https://cdn.discordapp.com/icons/${serveur.id}/${serveur.icon}.webp`
         : null,
-      tags,
+      tags_pending: tags,
       link_pending: link,
       owner: {
         connect: {
