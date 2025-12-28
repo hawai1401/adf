@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 
 export default async function Layout({
   children,
@@ -10,6 +10,6 @@ export default async function Layout({
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  if (!session) redirect("/");
+  if (!session) redirect("/", RedirectType.replace);
   return <>{children}</>;
 }

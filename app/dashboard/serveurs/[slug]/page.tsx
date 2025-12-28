@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { redirect, RedirectType } from "next/navigation";
 
 export default async function Serveurs({
   params,
@@ -18,7 +19,10 @@ export default async function Serveurs({
 }) {
   const { slug } = await params;
   const serveurs = await userServers();
+
   const s = serveurs.find((s) => s.id === slug)!;
+  if (s.approximate_member_count < 200)
+    redirect("/dashboard", RedirectType.replace);
   const s_db = await prisma.serveur.findUnique({
     where: {
       id: s.id,
