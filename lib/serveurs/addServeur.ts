@@ -44,6 +44,10 @@ export default async function addServeur(
     where: {
       id: guild!.userId,
     },
+    cacheStrategy: {
+      ttl: 600,
+      swr: 300,
+    },
   });
   if (!owner) throw new Error("Owner introuvable");
 

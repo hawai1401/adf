@@ -16,6 +16,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     where: {
       id,
     },
+    cacheStrategy: {
+      ttl: 300,
+    },
   });
 
   if (!guild)
@@ -55,6 +58,10 @@ export default async function Page({ params }: Props) {
   const guild = await prisma.serveur.findUnique({
     where: {
       id,
+    },
+    cacheStrategy: {
+      ttl: 300,
+      swr: 300,
     },
   });
 

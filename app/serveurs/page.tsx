@@ -14,6 +14,10 @@ export default async function Serveurs() {
     where: {
       approuved: true,
     },
+    cacheStrategy: {
+      ttl: 600,
+      swr: 300,
+    },
   });
 
   return (

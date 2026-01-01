@@ -12,6 +12,10 @@ export default async function DashBoard() {
         in: serveurs.map((s) => s.id),
       },
     },
+    cacheStrategy: {
+      ttl: 300,
+      swr: 300,
+    },
   });
 
   return (

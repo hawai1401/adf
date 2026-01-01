@@ -35,6 +35,10 @@ export default async function editDescription(
     where: {
       id: guild!.userId,
     },
+    cacheStrategy: {
+      ttl: 600,
+      swr: 300,
+    },
   });
   if (!owner) throw new Error("Owner introuvable");
 

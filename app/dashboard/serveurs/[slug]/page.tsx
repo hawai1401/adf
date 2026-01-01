@@ -25,11 +25,18 @@ export default async function Serveurs({
         in: serveurs.map((s) => s.id),
       },
     },
+    cacheStrategy: {
+      ttl: 300,
+      swr: 300,
+    },
   });
   const s = serveurs.find((s) => s.id === slug)!;
   const s_db = await prisma.serveur.findUnique({
     where: {
       id: s.id,
+    },
+    cacheStrategy: {
+      ttl: 300,
     },
   });
   if (s.approximate_member_count < 200 && !s_db?.whitelist)

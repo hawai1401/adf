@@ -25,6 +25,10 @@ export default async function Home() {
     where: {
       approuved: true,
     },
+    cacheStrategy: {
+      ttl: 600,
+      swr: 300,
+    },
   });
 
   const guild: serveur = await fetch(
@@ -89,7 +93,6 @@ export default async function Home() {
         id="cards"
         className="flex flex-col justify-around items-center p-8 w-full min-h-[calc(100vh-65px)] bg-base-300"
       >
-        
         <Cards />
       </section>
     </>
