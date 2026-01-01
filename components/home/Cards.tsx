@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { FaCalendarAlt, FaShieldAlt, FaUsers } from "react-icons/fa";
 import SpotlightCard from "../animations/SpotlightCard";
 import { cn } from "@/lib/utils";
+import ScrollFloat from "../animations/ScrollFloat";
 
 export default function Cards() {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -32,50 +33,65 @@ export default function Cards() {
   }, []);
 
   return (
-    <div className="flex gap-3 flex-wrap w-full">
-      <SpotlightCard
-        className={cn(
-          "custom-spotlight-card flex-1 transition-all duration-500 flex flex-col gap-3 min-w-75",
-          show[0] ? "opacity-100" : "translate-y-10 opacity-0"
-        )}
-        ref={cardRef}
-      >
-        <FaShieldAlt size={40} className="fill-primary" />
-        <h4 className="text-xl font-semibold">Sécurité</h4>
-        <p className="text-justify">
-          Nous avons un système de signalement qui permet aux membres de
-          signaler les membres problématiques. Après vérification, ces membres
-          peuvent être blacklistés pour protéger la communauté.
-        </p>
+    <>
+      <SpotlightCard className="flex items-center justify-center mb-10 px-8 transition-all duration-500 shadow-[0_7px_7px_var(--color-info),inset_0_1px_0_rgba(255,255,255,0.25)] -translate-y-2">
+        <ScrollFloat
+          animationDuration={1}
+          ease="back.inOut(2)"
+          scrollStart="center bottom+=0%"
+          scrollEnd="bottom bottom-=50%"
+          stagger={0.03}
+          textClassName="text-md"
+        >
+          Pourquoi nous choisir ?
+        </ScrollFloat>
       </SpotlightCard>
-      <SpotlightCard
-        className={cn(
-          "custom-spotlight-card flex-1 transition-all duration-500 flex flex-col gap-3 min-w-75",
-          show[1] ? "opacity-100" : "translate-y-10 opacity-0"
-        )}
-        ref={cardRef}
-      >
-        <FaUsers size={40} className="fill-primary" />
-        <h4 className="text-xl font-semibold">Communauté</h4>
-        <p className="text-justify">
-          Notre grande communauté de fondateurs permet de partager des
-          expériences, des conseils et de l&apos;entraide entre membres.
-        </p>
-      </SpotlightCard>
-      <SpotlightCard
-        className={cn(
-          "custom-spotlight-card flex-1 transition-all duration-500 flex flex-col gap-3 min-w-75",
-          show[2] ? "opacity-100" : "translate-y-10 opacity-0"
-        )}
-        ref={cardRef}
-      >
-        <FaCalendarAlt size={40} className="fill-primary" />
-        <h4 className="text-xl font-semibold">Réunions</h4>
-        <p className="text-justify">
-          Nous organisons régulièrement des réunions pour discuter des problèmes
-          et des solutions, ainsi que pour partager des idées innovantes.
-        </p>
-      </SpotlightCard>
-    </div>
+      <div className="flex gap-3 flex-wrap w-full">
+        <SpotlightCard
+          className={cn(
+            "p-8 custom-spotlight-card flex-1 transition-all duration-500 flex flex-col gap-3 min-w-75",
+            show[0] ? "opacity-100" : "translate-y-10 opacity-0"
+          )}
+          ref={cardRef}
+        >
+          <FaShieldAlt size={40} className="fill-info" />
+          <h4 className="text-xl font-semibold">Sécurité</h4>
+          <p className="text-justify">
+            Nous avons un système de signalement qui permet aux membres de
+            signaler les membres problématiques. Après vérification, ces membres
+            peuvent être blacklistés pour protéger la communauté.
+          </p>
+        </SpotlightCard>
+        <SpotlightCard
+          className={cn(
+            "p-8 custom-spotlight-card flex-1 transition-all duration-500 flex flex-col gap-3 min-w-75",
+            show[1] ? "opacity-100" : "translate-y-10 opacity-0"
+          )}
+          ref={cardRef}
+        >
+          <FaUsers size={40} className="fill-info" />
+          <h4 className="text-xl font-semibold">Communauté</h4>
+          <p className="text-justify">
+            Notre grande communauté de fondateurs permet de partager des
+            expériences, des conseils et de l&apos;entraide entre membres.
+          </p>
+        </SpotlightCard>
+        <SpotlightCard
+          className={cn(
+            "p-8 custom-spotlight-card flex-1 transition-all duration-500 flex flex-col gap-3 min-w-75",
+            show[2] ? "opacity-100" : "translate-y-10 opacity-0"
+          )}
+          ref={cardRef}
+        >
+          <FaCalendarAlt size={40} className="fill-info" />
+          <h4 className="text-xl font-semibold">Réunions</h4>
+          <p className="text-justify">
+            Nous organisons régulièrement des réunions pour discuter des
+            problèmes et des solutions, ainsi que pour partager des idées
+            innovantes.
+          </p>
+        </SpotlightCard>
+      </div>
+    </>
   );
 }

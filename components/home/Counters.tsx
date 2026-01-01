@@ -2,6 +2,9 @@
 
 import { useRef, useState, useEffect } from "react";
 import Counter from "../animations/Counter";
+import { IoPersonOutline } from "react-icons/io5";
+import { TfiStatsUp } from "react-icons/tfi";
+import { MdOutlineDoNotTouch } from "react-icons/md";
 
 export default function Counters({
   serveurs,
@@ -43,6 +46,7 @@ export default function Counters({
         className="flex flex-col items-center justify-center border px-4 py-7 rounded-box bg-base-300 shadow-xl flex-1"
         ref={counterRef}
       >
+        <TfiStatsUp  size={40} className="mb-4" />
         <h3 className="text-xl text-center">Serveurs</h3>
         <Counter
           value={play[0] ? serveurs : 0}
@@ -59,6 +63,7 @@ export default function Counters({
         className="flex flex-col items-center justify-center border px-4 py-7 rounded-box bg-base-300 shadow-xl flex-1"
         ref={counterRef}
       >
+        <IoPersonOutline size={40} className="mb-4" />
         <h3 className="text-xl text-center">Membres</h3>
         <Counter
           value={play[1] ? membres : 0}
@@ -75,6 +80,7 @@ export default function Counters({
         className="flex flex-col items-center justify-center border px-4 py-7 rounded-box bg-base-300 shadow-xl flex-1"
         ref={counterRef}
       >
+        <MdOutlineDoNotTouch size={40} className="mb-4" />
         <h3 className="text-xl text-center">Blacklists</h3>
         <Counter
           value={play[2] ? blacklists : 0}

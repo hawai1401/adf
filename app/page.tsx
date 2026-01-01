@@ -10,8 +10,15 @@ import Counters from "@/components/home/Counters";
 import Cards from "@/components/home/Cards";
 import prisma from "@/lib/prisma";
 import { serveur } from "@/lib/serveurs/userServers";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "ADF | Accueil",
+  description:
+    "Découvrez ADF, une communauté Discord regroupant des fondateurs et gérants de serveurs FR. Consultez nos statistiques et explorez les avantages de nous rejoindre.",
+};
 
 export default async function Home() {
   const serveurs = await prisma.serveur.count({
@@ -82,15 +89,7 @@ export default async function Home() {
         id="cards"
         className="flex flex-col justify-around items-center p-8 w-full min-h-[calc(100vh-65px)] bg-base-300"
       >
-        <ScrollFloat
-          animationDuration={1}
-          ease="back.inOut(2)"
-          scrollStart="center bottom+=0%"
-          scrollEnd="bottom bottom-=50%"
-          stagger={0.03}
-        >
-          Pourquoi nous choisir ?
-        </ScrollFloat>
+        
         <Cards />
       </section>
     </>

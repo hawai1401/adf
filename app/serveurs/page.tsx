@@ -1,7 +1,13 @@
 import Content from "@/components/serveurs/Content";
 import prisma from "@/lib/prisma";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "ADF | Serveurs",
+  description: "Les serveurs des membres de notre assemblée.",
+};
 
 export default async function Serveurs() {
   const serveurs = await prisma.serveur.findMany({

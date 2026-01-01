@@ -22,6 +22,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://adf.hawai1401.fr"),
   title: "ADF",
   description: "Assemblée Des Fondateurs",
   openGraph: {
@@ -29,13 +30,14 @@ export const metadata: Metadata = {
     description: "Assemblée Des Fondateurs",
     url: "https://adf.com",
     siteName: "ADF",
-    // images: [
-    // {
-    //   url: "https://adf.com/og-image.png",
-    //   width: 1200,
-    //   height: 630,
-    // },
-    // ],
+    images: [
+      {
+        url: "/logo.webp",
+        // width: 1200,
+        width: 630,
+        height: 630,
+      },
+    ],
     locale: "fr_FR",
     type: "website",
   },
@@ -43,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ADF",
     description: "Assemblée Des Fondateurs",
-    // images: ["https://adf.com/twitter-image.png"],
+    images: ["/logo.webp"],
   },
   robots: "index, follow",
   authors: [{ name: "ADF Team" }],
