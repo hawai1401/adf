@@ -11,14 +11,16 @@ import { FaSearch } from "react-icons/fa";
 import { serveur } from "@/generated/prisma/client";
 import { useState } from "react";
 import { TbMoodSad } from "react-icons/tb";
-import { existing_tags, tag } from "@/types/tags";
+import { existing_tags, tag } from "@/types/types";
 import { cn } from "@/lib/utils";
 
 export default function Content({ serveurs }: { serveurs: serveur[] }) {
   const [searchValue, setSearchValue] = useState("");
   const [searchTags, setSearchTags] = useState<tag[]>([]);
-  const displayServeurs = serveurs.filter((s) =>
-    s.nom.toLowerCase().includes(searchValue.toLowerCase()) && s.tags.sort().join().includes(searchTags.sort().join())
+  const displayServeurs = serveurs.filter(
+    (s) =>
+      s.nom.toLowerCase().includes(searchValue.toLowerCase()) &&
+      s.tags.sort().join().includes(searchTags.sort().join())
   );
   const tags_class: Record<tag, string> = {
     E_Sport: "primary",
@@ -58,13 +60,7 @@ export default function Content({ serveurs }: { serveurs: serveur[] }) {
                 `border-${tags_class[t]}`
               )}
               key={i}
-              onClick={() =>
-                setSearchTags(
-                  searchTags.filter(
-                    (v) => v !== (t)
-                  )
-                )
-              }
+              onClick={() => setSearchTags(searchTags.filter((v) => v !== t))}
             >
               {t}
             </div>
@@ -75,9 +71,7 @@ export default function Content({ serveurs }: { serveurs: serveur[] }) {
         <p className="font-semibold">Tags existants</p>
         <div className="flex flex-wrap gap-2">
           {[...existing_tags]
-            .filter(
-              (t) => !searchTags.includes(t)
-            )
+            .filter((t) => !searchTags.includes(t))
             .map((t, i) => (
               <div
                 className={cn(
@@ -86,12 +80,7 @@ export default function Content({ serveurs }: { serveurs: serveur[] }) {
                   `border-${tags_class[t]}`
                 )}
                 key={i}
-                onClick={() =>
-                  setSearchTags([
-                    ...searchTags,
-                    t,
-                  ])
-                }
+                onClick={() => setSearchTags([...searchTags, t])}
               >
                 {t}
               </div>
@@ -104,6 +93,7 @@ export default function Content({ serveurs }: { serveurs: serveur[] }) {
             {displayServeurs.map((s) => (
               <Serveur
                 key={s.id}
+                id={s.id}
                 logo={s.logoURL}
                 name={s.nom}
                 member_count={s.member_count}

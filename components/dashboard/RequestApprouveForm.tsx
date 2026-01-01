@@ -19,7 +19,7 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "../ui/input-group";
-import { existing_tags, tag } from "@/types/tags";
+import { existing_tags, tag } from "@/types/types";
 
 export default function RequestApprouveForm({
   serveur,
@@ -164,7 +164,7 @@ export default function RequestApprouveForm({
                 setIsEdited(false);
                 toast.error("Lien invalide !");
               } else {
-                setIsEdited(true)
+                setIsEdited(true);
               }
             }}
           />

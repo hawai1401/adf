@@ -4,22 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import Hr from "./Hr";
 import { Button } from "../animate-ui/components/buttons/button";
-import { tag } from "@/types/tags";
+import { tag } from "@/types/types";
 
 export default function Serveur({
-  logo,
+  id,
   name,
   member_count,
   description,
-  tags,
   link,
+  logo,
+  tags,
 }: {
-  logo?: string | null | undefined;
+  id: string;
   name: string;
   member_count: number | string;
   description: string;
-  tags?: tag[] | null | undefined;
   link: string;
+  logo?: string | null | undefined;
+  tags?: tag[] | null | undefined;
 }) {
   const tags_class: Record<tag, string> = {
     E_Sport: "primary",
@@ -52,7 +54,12 @@ export default function Serveur({
             </div>
           )}
           <div className="flex flex-col">
-            <h4 className="font-semibold">{name}</h4>
+            <Link
+              href={`/serveurs/${id}`}
+              className="font-semibold hover:underline"
+            >
+              {name}
+            </Link>
             <p>{member_count} membres</p>
           </div>
         </div>

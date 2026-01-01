@@ -4,7 +4,7 @@ import { ButtonStyle } from "discord-api-types/v10";
 import prisma from "../prisma";
 import { serveur } from "./userServers";
 import getMember from "../utilisateurs/getMember";
-import { tag } from "../../types/tags";
+import { tag } from "../../types/types";
 
 export default async function editDescription(
   serveur: serveur,

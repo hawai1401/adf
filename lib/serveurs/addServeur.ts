@@ -6,7 +6,7 @@ import { serveur } from "./userServers";
 import { auth } from "../auth";
 import getMember from "../utilisateurs/getMember";
 import { ButtonStyle } from "discord-api-types/v10";
-import { tag } from "../../types/tags";
+import { tag } from "../../types/types";
 
 export default async function addServeur(
   serveur: serveur,

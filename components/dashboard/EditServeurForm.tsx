@@ -26,7 +26,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { existing_tags, tag } from "@/types/tags";
+import { existing_tags, tag } from "@/types/types";
 
 export default function EditServeurForm({
   serveur,
@@ -115,34 +115,34 @@ export default function EditServeurForm({
             ) : (
               <div>
                 {action === "edit" ? (
-                 <InputGroup>
-                  <InputGroupTextarea
-                    id="description"
-                    defaultValue={description}
-                    required
-                    onInput={(e) => {
-                      const value = e.currentTarget.value;
-                      if (value.length > 0) setIsEdited(true);
-                      setDescription(value);
-                    }}
-                    maxLength={1020}
-                  />
-                  <InputGroupAddon align="block-end" className="justify-end">
-                    <InputGroupText
-                      className={
-                        description.length === 1020
-                          ? "text-red-500"
-                          : description.length > 1000
-                          ? "text-red-400"
-                          : description.length > 980
-                          ? "text-orange-400"
-                          : ""
-                      }
-                    >
-                      {description.length}/1020
-                    </InputGroupText>
-                  </InputGroupAddon>
-                </InputGroup>
+                  <InputGroup>
+                    <InputGroupTextarea
+                      id="description"
+                      defaultValue={description}
+                      required
+                      onInput={(e) => {
+                        const value = e.currentTarget.value;
+                        if (value.length > 0) setIsEdited(true);
+                        setDescription(value);
+                      }}
+                      maxLength={1020}
+                    />
+                    <InputGroupAddon align="block-end" className="justify-end">
+                      <InputGroupText
+                        className={
+                          description.length === 1020
+                            ? "text-red-500"
+                            : description.length > 1000
+                            ? "text-red-400"
+                            : description.length > 980
+                            ? "text-orange-400"
+                            : ""
+                        }
+                      >
+                        {description.length}/1020
+                      </InputGroupText>
+                    </InputGroupAddon>
+                  </InputGroup>
                 ) : (
                   <div className="border p-4 rounded-box">
                     {textToMarkdown(description)}
