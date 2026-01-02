@@ -48,15 +48,7 @@ export default async function getMember(user: string) {
   let cache_value_user = cache_user.get(cache_value_members[0].user.id);
 
   if (!cache_value_user) {
-    const discord_user: user = await fetch(
-      `https://discord.com/api/v10/users/${cache_value_members[0].user.id}`,
-      {
-        headers: {
-          Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      }
-    ).then((res) => res.json());
+    const discord_user = await getUser(cache_value_members[0].user.id);
 
     cache_value_user = discord_user;
     cache_user.set(cache_value_members[0].user.id, discord_user);
@@ -68,4 +60,17 @@ export default async function getMember(user: string) {
   cache_value_members[0].user = cache_value_user;
 
   return cache_value_members[0];
+}
+
+export async function getUser(id: string) {
+  const discord_user: user = await fetch(
+    `https://discord.com/api/v10/users/${id}`,
+    {
+      headers: {
+        Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    }
+  ).then((res) => res.json());
+  return discord_user;
 }

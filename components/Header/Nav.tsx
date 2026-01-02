@@ -26,6 +26,9 @@ export default function Nav() {
             <Link href="/serveurs">Serveurs</Link>
           </li>
           <li>
+            <Link href="/blacklist">Blacklist</Link>
+          </li>
+          <li>
             <Link target="_blank" href="https://discord.gg/P3dcjTuuav">
               Discord
             </Link>
@@ -41,6 +44,9 @@ export default function Nav() {
                 </li>
                 <li>
                   <Link href="/serveurs">Serveurs</Link>
+                </li>
+                <li>
+                  <Link href="/blacklist">Blacklist</Link>
                 </li>
                 <li>
                   <Link target="_blank" href="https://discord.gg/P3dcjTuuav">

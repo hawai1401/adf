@@ -10,6 +10,7 @@
     "migrate": "prisma migrate dev && prisma generate"
   },
   "dependencies": {
+    "@better-auth/cli": "^1.4.10",
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "@prisma/extension-accelerate": "^3.0.1",
