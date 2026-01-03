@@ -30,6 +30,12 @@ export default async function Home() {
       swr: 300,
     },
   });
+  const blacklists = await prisma.blacklist.count({
+    cacheStrategy: {
+      ttl: 600,
+      swr: 300,
+    },
+  });
 
   const guild: serveur = await fetch(
     `https://discord.com/api/v10/guilds/1429482388655706235?with_counts=true`,
@@ -86,7 +92,7 @@ export default async function Home() {
         <Counters
           serveurs={serveurs}
           membres={guild.approximate_member_count}
-          blacklists={25}
+          blacklists={blacklists}
         />
       </section>
       <section
