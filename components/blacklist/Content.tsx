@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { CiCircleCheck, CiCircleRemove } from "react-icons/ci";
 import { Blacklist } from "@/generated/prisma/client";
+import { toast } from "sonner";
 
 export default function Content({ blacklists }: { blacklists: Blacklist[] }) {
   const [id, setId] = useState("");
@@ -25,12 +26,18 @@ export default function Content({ blacklists }: { blacklists: Blacklist[] }) {
 
     let cancelled = false;
 
-    getUser(id).then((u) => {
-      if (!cancelled) {
-        setUser(u);
-        setBlacklistUser(blacklists.find((v) => v.id === u.id));
-      }
-    });
+    getUser(id)
+      .then((u) => {
+        if (!cancelled) {
+          setUser(u);
+          setBlacklistUser(blacklists.find((v) => v.id === u.id));
+        }
+      })
+      .catch(() => {
+        setUser(null);
+        setBlacklistUser(undefined);
+        toast.error("Utilisateur invalide !")
+      });
 
     return () => {
       cancelled = true;

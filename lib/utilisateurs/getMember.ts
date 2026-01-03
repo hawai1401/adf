@@ -71,6 +71,9 @@ export async function getUser(id: string) {
         "Content-Type": "application/json",
       },
     }
-  ).then((res) => res.json());
+  ).then((res) => {
+    if (res.ok) return res.json();
+    throw new Error("Utilisateur invalide")
+  });
   return discord_user;
 }
