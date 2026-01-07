@@ -7,6 +7,17 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "ADF | Serveurs",
   description: "Les serveurs des membres de notre assemblée.",
+  openGraph: {
+    title: "ADF | Serveurs",
+    description: "Les serveurs des membres de notre assemblée.",
+    url: `https://adf.com/serveurs`,
+    siteName: "ADF",
+  },
+  twitter: {
+    title: "ADF | Serveurs",
+    description: "Les serveurs des membres de notre assemblée.",
+  },
+  keywords: ["ADF", "Discord", "Serveurs", "Serveur"],
 };
 
 export default async function Serveurs() {

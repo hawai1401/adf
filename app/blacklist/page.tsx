@@ -5,6 +5,17 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "ADF | Blacklist",
   description: "Vérifier si un membre est blacklist de notre assemblée.",
+  openGraph: {
+    title: "ADF | Blacklist",
+    description: "Vérifier si un membre est blacklist de notre assemblée.",
+    url: `https://adf.com/blacklist`,
+    siteName: "ADF",
+  },
+  twitter: {
+    title: "ADF | Blacklist",
+    description: "Vérifier si un membre est blacklist de notre assemblée.",
+  },
+  keywords: ["ADF", "Blacklist"],
 };
 
 export default async function Blacklist() {

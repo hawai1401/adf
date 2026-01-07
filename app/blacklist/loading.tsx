@@ -8,7 +8,7 @@ export default function Loading() {
         </p>
       </div>
       <div className="w-full h-20 rounded-full skeleton bg-base-200/80" />
-      <div className="flex flex-col gap-5 items-center justify-center bg-base-300 w-full h-full rounded-lg skeleton bg-base-200/80" />
+      <div className="flex flex-col gap-5 items-center justify-center w-full h-full rounded-lg skeleton bg-base-200/80" />
     </main>
   );
 }

@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: guild.nom,
       description: guild.description,
-      url: "https://adf.com",
+      url: `https://adf.com/serveurs/${id}`,
       siteName: "ADF",
       images: [
         {
@@ -49,6 +49,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: guild.description,
       images: [guild.logoURL ?? ""],
     },
+    keywords: [
+      "ADF",
+      "Serveur",
+      "Serveurs",
+      "Discord",
+      guild.nom,
+      ...guild.tags,
+    ],
   };
 }
 

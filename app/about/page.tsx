@@ -5,6 +5,18 @@ export const metadata: Metadata = {
   title: "ADF | À Propos",
   description:
     "Fondée le 11 novembre 2025, l’Assemblée des Fondateurs est une communauté Discord réservée aux fondateurs et co-fondateurs de serveurs actifs dépassant les 200 membres.",
+  openGraph: {
+    title: "ADF | À Propos",
+    description:
+      "Fondée le 11 novembre 2025, l’Assemblée des Fondateurs est une communauté Discord réservée aux fondateurs et co-fondateurs de serveurs actifs dépassant les 200 membres.",
+    url: `https://adf.com/about`,
+    siteName: "ADF",
+  },
+  twitter: {
+    title: "ADF | À Propos",
+    description:
+      "Fondée le 11 novembre 2025, l’Assemblée des Fondateurs est une communauté Discord réservée aux fondateurs et co-fondateurs de serveurs actifs dépassant les 200 membres.",
+  },
 };
 
 export default function About() {
