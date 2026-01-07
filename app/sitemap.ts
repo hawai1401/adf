@@ -1,6 +1,23 @@
 import type { MetadataRoute } from "next";
+import prisma from "@/lib/prisma";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const serveurs = await prisma.serveur.findMany({
+    where: {
+      approuved: true,
+    },
+    cacheStrategy: {
+      ttl: 600,
+      swr: 300,
+    },
+  });
+
+  const dynamicUrls: MetadataRoute.Sitemap = serveurs.map((s) => ({
+    url: `https://adf.hawai1401.fr/serveurs/${s.id}`,
+    lastModified: s.updatedAt,
+    changeFrequency: "weekly",
+  }));
+
   return [
     {
       url: "https://adf.hawai1401.fr",
@@ -22,5 +39,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(2026, 0, 7, 18, 40),
       changeFrequency: "monthly",
     },
+    ...dynamicUrls,
   ];
 }
