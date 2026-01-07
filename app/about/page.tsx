@@ -1,4 +1,4 @@
-import Orb from "@/components/background/Orb";
+import Galaxy from "@/components/background/Galaxy";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,16 +11,16 @@ export default function About() {
   return (
     <>
       <div className="fixed inset-0 bg-black overflow-hidden">
-        <Orb
-          hoverIntensity={0.5}
-          rotateOnHover={true}
-          hue={0}
-          forceHoverState={false}
+        <Galaxy
+          speed={0.6}
+          starSpeed={0.5}
+          mouseRepulsion={false}
+          mouseInteraction={false}
         />
       </div>
       <div className="backdrop-blur-sm w-full px-8 py-12 flex justify-center">
         <div className="max-w-3xl flex flex-col gap-12">
-          <div className="flex flex-col gap-4 text-center">
+          <div className="flex flex-col gap-4 text-center rounded-lg p-4">
             <h1 className="text-4xl font-semibold">
               L’Assemblée Des Fondateurs
             </h1>
