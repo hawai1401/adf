@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import useDiscordAuth from "@/hooks/useDiscordAuth";
 import {
@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { IoExitOutline, IoHomeOutline } from "react-icons/io5";
 import Link from "next/link";
+import FallBackButton from "./FallBackButton";
 
 export default function SignInButton() {
   const { signIn, user, isFetch, getUser, signOut } = useDiscordAuth();
@@ -19,14 +20,14 @@ export default function SignInButton() {
     if (!isFetch && user === undefined) getUser();
   }, [isFetch, user, getUser]);
 
-  if (isFetch || !user)
+  if (isFetch) return <FallBackButton />;
+  if (!user)
     return (
       <ul className="menu menu-horizontal px-1">
         <li>
           <RippleButton
             variant="outline"
-            className="rounded-full"
-            size={"lg"}
+            className="rounded-full h-[33px]"
             onClick={() => signIn()}
           >
             Se connecter

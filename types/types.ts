@@ -16,3 +16,5 @@ export type Props = {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
+
+export type field = { name: string; value: string; inline?: boolean };
