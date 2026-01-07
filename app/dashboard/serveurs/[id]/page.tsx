@@ -15,9 +15,9 @@ import { redirect, RedirectType } from "next/navigation";
 export default async function Serveurs({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ id: string }>;
 }) {
-  const { slug } = await params;
+  const { id } = await params;
   const serveurs = await userServers();
   const serveurs_db = await prisma.serveur.findMany({
     where: {
@@ -30,7 +30,7 @@ export default async function Serveurs({
       swr: 300,
     },
   });
-  const s = serveurs.find((s) => s.id === slug)!;
+  const s = serveurs.find((s) => s.id === id)!;
   const s_db = await prisma.serveur.findUnique({
     where: {
       id: s.id,
@@ -43,11 +43,11 @@ export default async function Serveurs({
     redirect("/dashboard", RedirectType.replace);
   return (
     <>
-      <aside className="fixed top-15 left-0 w-55 h-[calc(100vh-60px)] bg-base-200 hidden sm:block">
-        <SideMenu serveurs={serveurs} serveurs_db={serveurs_db} actual={slug} />
+      <aside className="fixed top-15 left-0 w-55 h-[calc(100vh-65px)] bg-base-200 hidden sm:block">
+        <SideMenu serveurs={serveurs} serveurs_db={serveurs_db} actual={id} />
       </aside>
 
-      <main className="sm:ml-55 min-h-[calc(100vh-60px)]">
+      <main className="sm:ml-55 min-h-[calc(100vh-65px)]">
         <h1 className="text-xl font-semibold text-center py-5 bg-base-200 w-full flex flex-wrap items-center justify-center gap-3">
           {s.icon ? (
             <Image
@@ -58,7 +58,7 @@ export default async function Serveurs({
               className="rounded-full border border-accent"
             />
           ) : (
-            <div className="w-12.5 h-12.5 rounded-full border border-accent flex items-center justify-center">
+            <div className="w-[30px] h-[30px] rounded-full border border-accent flex items-center justify-center">
               {s.name.charAt(0)}
             </div>
           )}

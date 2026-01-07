@@ -20,11 +20,11 @@ export default async function DashBoard() {
 
   return (
     <>
-      <aside className="fixed top-15 left-0 w-55 h-[calc(100vh-60px)] bg-base-200 hidden sm:block">
+      <aside className="fixed top-15 left-0 w-55 h-[calc(100vh-65px)] bg-base-200 hidden sm:block">
         <SideMenu serveurs={serveurs} serveurs_db={serveurs_db} />
       </aside>
 
-      <main className="sm:ml-55 min-h-[calc(100vh-60px)]">
+      <main className="sm:ml-55 min-h-[calc(100vh-65px)]">
         <h1 className="text-xl font-semibold text-center p-2 bg-base-200 w-full">
           Choisissez un serveur à gérer
         </h1>

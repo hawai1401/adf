@@ -89,7 +89,8 @@ export default function Content({ serveurs }: { serveurs: serveur[] }) {
       </div>
       {displayServeurs.length > 0 ? (
         <>
-          <div className="grid md:grid-cols-2 lg-grid-cols-3 gap-4">
+          <p className="font-semibold">Serveurs</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {displayServeurs.map((s) => (
               <Serveur
                 key={s.id}

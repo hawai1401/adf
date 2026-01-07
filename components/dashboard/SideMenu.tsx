@@ -16,7 +16,7 @@ export default async function SideMenu({
   actual?: string;
 }) {
   return (
-    <ul className="menu menu-xs bg-base-200 rounded-box max-w-55 mt-2 h-[calc(100vh-60px)]">
+    <ul className="menu menu-xs bg-base-200 rounded-box max-w-55 mt-2 h-[calc(100vh-65px)]">
       <li>
         <Link href="/dashboard">
           <IoHomeOutline size={20} />

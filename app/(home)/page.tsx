@@ -60,6 +60,7 @@ export default async function Home() {
             width="150"
             height="150"
             className="rounded-full border-3"
+            preload
           />
           <h1 className="text-3xl mt-4">
             Bienvenue sur le site du serveur ADF !
