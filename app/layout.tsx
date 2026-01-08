@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ADF",
     description: "Assemblée Des Fondateurs",
-    url: "https://adf.com",
+    url: "https://adf.hawai1401.fr",
     siteName: "ADF",
     images: [
       {
