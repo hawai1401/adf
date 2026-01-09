@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: guild.nom,
       description: guild.description,
-      url: `https://adf.com/serveurs/${id}`,
+      url: `https://adf.hawai1401.fr/serveurs/${id}`,
       siteName: "ADF",
       images: [
         {
