@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ADF | Serveurs",
     description: "Les serveurs des membres de notre assemblée.",
-    url: `https://adf.com/serveurs`,
+    url: `https://adf.hawai1401.fr/serveurs`,
     siteName: "ADF",
   },
   twitter: {
