@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: "ADF | À Propos",
     description:
       "Fondée le 11 novembre 2025, l’Assemblée des Fondateurs est une communauté Discord réservée aux fondateurs et co-fondateurs de serveurs actifs dépassant les 200 membres.",
-    url: `https://adf.com/about`,
+    url: `https://adf.hawai1401.fr/about`,
     siteName: "ADF",
   },
   twitter: {
