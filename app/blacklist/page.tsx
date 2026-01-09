@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ADF | Blacklist",
     description: "Vérifier si un membre est blacklist de notre assemblée.",
-    url: `https://adf.com/blacklist`,
+    url: `https://adf.hawai1401.fr/blacklist`,
     siteName: "ADF",
   },
   twitter: {
